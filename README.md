@@ -4,4 +4,6 @@ The mathematics behind backpropogation were learned in this lecture: https://www
 
 All the necessary concepts to understand the mathematics behind backpropogation are summarized in the pdf file, which are notes taken from the lecture.
 
+The implementation of the neural network can be found in the .ipynb file, and to use file, run all the cells from top to bottom.
+
 I also referenced Samson Zhang's video on neural network implementations, in order to create the test cases, which can be found here: https://www.youtube.com/watch?v=w8yWXqWQYmU&ab_channel=SamsonZhang.
