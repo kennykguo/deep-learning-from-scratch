@@ -1,4 +1,4 @@
-# Neural network using only Python, numpy, and Calculus
+# Neural network implementation using only Python, NumPy, and Calculus
 
 The mathematics behind backpropogation were learned in this lecture: https://www.youtube.com/watch?time_continue=13581&v=Ixl3nykKG9M&embeds_referring_euri=https%3A%2F%2Fadamdhalla.com%2F&source_ve_path=MjM4NTE&feature=emb_title&ab_channel=AdamDhalla
 
