@@ -8,4 +8,4 @@ The implementation of the neural network can be found in the .ipynb file, and to
 
 The neural network reached an accuracy of 85%, with 2 layers of 10 neurons. It may be improved by adding one more layer of neurons, increasing the training examples by adding more data, and adjusting the learning rate.
 
-I also referenced Samson Zhang's video on neural network implementations, in order to create the test cases, which can be found here: https://www.youtube.com/watch?v=w8yWXqWQYmU&ab_channel=SamsonZhang.
+This project involves Samson Zhang's test cases, which can be found within this video: https://www.youtube.com/watch?v=w8yWXqWQYmU&ab_channel=SamsonZhang.
