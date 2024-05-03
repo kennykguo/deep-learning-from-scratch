@@ -39,7 +39,16 @@ def load_data():
     That's done in the wrapper function ``load_data_wrapper()``, see
     below.
     """
-    with gzip.open('../data/mnist.pkl.gz', 'rb') as f:
+
+    import gzip
+    import os
+
+    # Get the current directory of the Python script
+    current_dir = os.path.dirname(__file__)
+
+    # Construct the relative file path to the MNIST dataset
+    file_path = os.path.join(current_dir, 'data', 'mnist.pkl.gz')
+    with gzip.open(file_path, 'rb') as f:
         training_data, validation_data, test_data = pickle.load(f, encoding='latin1')
     return (training_data, validation_data, test_data)
 

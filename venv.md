@@ -1,1 +1,1 @@
-source tutorial-env/bin/activate
+source venv/bin/activate
