@@ -6,6 +6,8 @@ https://www.youtube.com/watch?time_continue=13581&v=Ixl3nykKG9M&embeds_referring
 
 http://neuralnetworksanddeeplearning.com/
 
-The neural network with the ReLU activation function reached an accuracy of 85%, with 2 layers of 10 neurons. It may be improved through adding layers, adjusting learning rates, using different activation functions, and other finetuning techniques.
+https://arxiv.org/pdf/1802.01528
 
-The neural network with the sigmoid activation function utilized stochastic gradient descent, and reached an accuracy of 96%, over the validation set.
+The neural network with the ReLU activation function reached a maximum accuracy of 85%, with 2 layers of 10 neurons. It may be improved through adding layers, adjusting learning rates, using different activation functions, and other finetuning techniques. You may also improve its efficiency by implementing stochastic gradient descent, instead of backpropogating over all 41,000 training examples.
+
+The neural network with the sigmoid activation function and stochastic gradient descent reached an accuracy of 96%, over the validation set. 
