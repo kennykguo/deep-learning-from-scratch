@@ -12,4 +12,5 @@ The neural network with the ReLU activation function reached a maximum accuracy 
 
 The neural network with the sigmoid activation function and stochastic gradient descent reached an accuracy of 96%, over the validation set. 
 
-![nn](https://github.com/kennykguo/neural-networks-from-scratch/assets/110429254/c310137e-80b9-4b9e-9d06-8664c09bacdb)
+![image](https://github.com/kennykguo/neural-networks-from-scratch/assets/110429254/ac9c109c-0ab6-4114-90e1-30c0c6e34bdc)
+
