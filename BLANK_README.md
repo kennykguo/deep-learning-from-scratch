@@ -36,11 +36,11 @@
 
 ### Built With
 
-* [![Torch][PyTorch]]
-* [![Python][Python]]
-* [![C][C]][C-url]
-* [![C++][C++]][C++-url]
-
+* ![Torch][PyTorch]
+* ![Python][Python]
+* ![C][C]
+* ![C++][C++]
+* ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
