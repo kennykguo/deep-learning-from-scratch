@@ -30,7 +30,7 @@
 <br />
 <!-- PROJECT LOGO -->
 
-<h1 align="center">Deep Learning From Scratch</h1>
+<h2 align="center">Deep Learning From Scratch</h2>
 </div>
 
 
