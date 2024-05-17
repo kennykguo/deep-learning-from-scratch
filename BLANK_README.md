@@ -68,7 +68,7 @@
 
 ### Built With
 
-* [![PyTorch][Next.js]][PyTorch-url]
+* [PyTorch]
 * [![Python][Python]][Python-url]
 * [![C][C]][C-url]
 * [![C++][C++]][C++-url]
