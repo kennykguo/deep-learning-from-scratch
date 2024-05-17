@@ -36,7 +36,7 @@
 
 ### Built With
 
-* [![PyTorch][PyTorch]]
+* [![Torch][PyTorch]]
 * [![Python][Python]]
 * [![C][C]][C-url]
 * [![C++][C++]][C++-url]
@@ -56,7 +56,7 @@ Some of the resources referenced:
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+[PyTorch]: https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white
 [Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 [C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 [C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
