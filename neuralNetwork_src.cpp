@@ -1,6 +1,3 @@
-// neural-net-tutorial.cpp
-// David Miller, http://millermattson.com/dave
-// See the associated video for instructions: http://vimeo.com/19569529
 #include <vector>
 #include <iostream>
 #include <cstdlib>
@@ -104,6 +101,7 @@ unsigned TrainingData::getTargetOutputs(vector<double> &targetOutputVals)
     return targetOutputVals.size();
 }
 
+
 // A single connection holds its weight, and its respective gradient
 struct Connection
 {
@@ -120,12 +118,23 @@ typedef vector<Neuron> Layer;
 class Neuron
 {
 public:
+    // Neuron constructor that takes in the number of outputs and its index in the layer
     Neuron(unsigned numOutputs, unsigned myIndex);
-    void setOutputVal(double val) { m_outputVal = val; }
-    double getOutputVal(void) const { return m_outputVal; }
+    // Set neuron's output value (since it is private)
+    void setOutputVal(double val) {
+        m_outputVal = val; 
+    }
+    // Get neuron's output value (since it is private)
+    double getOutputVal(void) const {
+        return m_outputVal; 
+    }
+    // Calculates output values, given a pointer from the previous layer
     void feedForward(const Layer &prevLayer);
+    // Calculates the output gradients, given the targetVal 
     void calcOutputGradients(double targetVal);
+    // Calculates gradients for the next layer
     void calcHiddenGradients(const Layer &nextLayer);
+    // Updates input weights of the previous layers
     void updateInputWeights(Layer &prevLayer);
 
 private:
@@ -135,9 +144,15 @@ private:
     static double transferFunctionDerivative(double x);
     // What is static?
     // Returns a random weight
-    static double randomWeight(void) { return rand() / double(RAND_MAX); }
+    static double randomWeight(void) {
+        return rand() / double(RAND_MAX); 
+    }
     double sumDOW(const Layer &nextLayer) const;
-    // Each neuron will have a variable that stores its output value, weights, index, and gradient
+    // Each neuron will have a variable that:
+    // Stores its output value
+    // Stores its output weights
+    // Stores its index in the layer
+    // Stores its individual neuron gradient
     double m_outputVal;
     vector<Connection> m_outputWeights;
     unsigned m_myIndex;
@@ -146,6 +161,7 @@ private:
 
 double Neuron::eta = 0.15;
 double Neuron::alpha = 0.5;
+
 
 // Takes in a pointer to a vector of the previous layer
 void Neuron::updateInputWeights(Layer &prevLayer)
@@ -169,16 +185,15 @@ void Neuron::updateInputWeights(Layer &prevLayer)
     }
 }
 
+// Sums the derivatives of the next layer
 double Neuron::sumDOW(const Layer &nextLayer) const
 {
     double sum = 0.0;
 
-    // Sum our contributions of the errors at the nodes we feed.
-
+    // Sum our contributions of the errors at the nodes we feed
     for (unsigned n = 0; n < nextLayer.size() - 1; ++n) {
         sum += m_outputWeights[n].weight * nextLayer[n].m_gradient;
     }
-
     return sum;
 }
 
@@ -196,8 +211,6 @@ void Neuron::calcOutputGradients(double targetVal)
 
 double Neuron::transferFunction(double x)
 {
-    // tanh - output range [-1.0..1.0]
-
     return tanh(x);
 }
 
@@ -207,14 +220,16 @@ double Neuron::transferFunctionDerivative(double x)
     return 1.0 - x * x;
 }
 
+// To feedforward to the current neuron, we sum all the contributions of the previous layer's outputs * the outputWeights that are going into the index of the neuron
 void Neuron::feedForward(const Layer &prevLayer)
 {
     double sum = 0.0;
 
-    // Sum the previous layer's outputs (which are our inputs)
+    // Sum the previous layer's activations
     // Include the bias node from the previous layer.
-
-    for (unsigned n = 0; n < prevLayer.size(); ++n) {
+    for (unsigned n = 0; n < prevLayer.size(); n++) {
+        // prevLayer[n] gets the Neuron
+        // .getOutputVal() gets the output value
         sum += prevLayer[n].getOutputVal() *
                 prevLayer[n].m_outputWeights[m_myIndex].weight;
     }
@@ -222,9 +237,12 @@ void Neuron::feedForward(const Layer &prevLayer)
     m_outputVal = Neuron::transferFunction(sum);
 }
 
+// Neuron constructor
 Neuron::Neuron(unsigned numOutputs, unsigned myIndex)
 {
+
     for (unsigned c = 0; c < numOutputs; ++c) {
+        // Creates a new connection object and appends it the attribute 'm_outputWeights'
         m_outputWeights.push_back(Connection());
         m_outputWeights.back().weight = randomWeight();
     }
@@ -242,7 +260,6 @@ public:
     void backProp(const vector<double> &targetVals);
     void getResults(vector<double> &resultVals) const;
     double getRecentAverageError(void) const { return m_recentAverageError; }
-
 private:
     vector<Layer> m_layers; 
     // m_layers[layerNum][neuronNum]
@@ -254,6 +271,26 @@ private:
 
 double Net::m_recentAverageSmoothingFactor = 100.0; // Number of training samples to average over
 
+
+
+Net::Net(const vector<unsigned> &topology)
+{
+    unsigned numLayers = topology.size();
+    for (unsigned layerNum = 0; layerNum < numLayers; ++layerNum) {
+        m_layers.push_back(Layer());
+        unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum + 1];
+
+        // We have a new layer, now fill it with neurons, and
+        // add a bias neuron in each layer.
+        for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; ++neuronNum) {
+            m_layers.back().push_back(Neuron(numOutputs, neuronNum));
+            cout << "Made a Neuron!" << endl;
+        }
+
+        // Force the bias node's output to 1.0 (it was the last neuron pushed in this layer):
+        m_layers.back().back().setOutputVal(1.0);
+    }
+}
 
 void Net::getResults(vector<double> &resultVals) const
 {
@@ -332,24 +369,7 @@ void Net::feedForward(const vector<double> &inputVals)
     }
 }
 
-Net::Net(const vector<unsigned> &topology)
-{
-    unsigned numLayers = topology.size();
-    for (unsigned layerNum = 0; layerNum < numLayers; ++layerNum) {
-        m_layers.push_back(Layer());
-        unsigned numOutputs = layerNum == topology.size() - 1 ? 0 : topology[layerNum + 1];
 
-        // We have a new layer, now fill it with neurons, and
-        // add a bias neuron in each layer.
-        for (unsigned neuronNum = 0; neuronNum <= topology[layerNum]; ++neuronNum) {
-            m_layers.back().push_back(Neuron(numOutputs, neuronNum));
-            cout << "Made a Neuron!" << endl;
-        }
-
-        // Force the bias node's output to 1.0 (it was the last neuron pushed in this layer):
-        m_layers.back().back().setOutputVal(1.0);
-    }
-}
 
 
 void showVectorVals(string label, vector<double> &v)
