@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 class Network:
     def __init__(self):
@@ -21,6 +22,7 @@ class Network:
         self.dW2 *= 0;
         self.db2 = np.random.rand(10, 1)
         self.db2 *= 0;
+        self.accuracies = [];
     
     def ReLU(self, Z): # Takes in a scalar, returns a scalar
         return np.maximum(Z, 0)
@@ -94,4 +96,16 @@ class Network:
             print("Epoch:", i)
             # Calculate accuracy using the entire dataset
             Z1, A1, Z2, A2 = self.forward_prop(X_dev)
-            print("Accuracy:", self.get_accuracy(self.get_predictions(A2), Y_dev))
+            accuracy = self.get_accuracy(self.get_predictions(A2), Y_dev)
+            print("Accuracy:", accuracy)
+            self.accuracies.append(accuracy)
+
+    def plot_accuracies(self):
+        epochs = range(1, len(self.accuracies) + 1)
+        plt.plot(epochs, self.accuracies, 'b-', label='Accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.title('Model Accuracy over Epochs')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
