@@ -1,11 +1,7 @@
-#include <vector>
-#include <iostream>
-#include <cstdlib>
-#include <cassert>
-#include <cmath>
-#include <fstream>
+#include "Training.h"
 #include <sstream>
-
+#include <string>
+#include <cstdlib>
 
 void TrainingData::getTopology(vector<unsigned> &topology)
 {

@@ -1,82 +1,59 @@
-#include <vector>
+// main.cpp
 #include <iostream>
-#include <cstdlib>
-#include <cassert>
-#include <cmath>
-#include <fstream>
-#include <sstream>
+#include <vector>
+#include "Network.h"
+#include "Training.h"
 
 using namespace std;
 
-// Silly class to read training data from a text file -- Replace this.
-// Replace class TrainingData with whatever you need to get input data into the
-// program, e.g., connect to a database, or take a stream of data from stdin, or
-// from a file specified by a command line argument, etc.
+void showVectorVals(string label, vector<double> &v);
 
-struct Connection
-{
-    double weight;
-    double deltaWeight;
-};
+int main() {
 
+    TrainingData trainData("/tmp/trainingData.txt");
 
-class Neuron;
+    vector<unsigned> topology;
 
-typedef vector<Neuron> Layer;
+    topology.push_back(3);
 
+    topology.push_back(4);
 
-void showVectorVals(string label, vector<double> &v)
-{
+    topology.push_back(5);
+
+    Net myNet(topology);
+
+    // // Simulate the training loop (replace with actual training data handling)
+    // while (trainingPass < 100) { // Just a dummy loop for illustration
+    //     ++trainingPass;
+    //     cout << endl << "Pass " << trainingPass;
+
+    //     // Simulate getting new input data:
+    //     inputVals = {1.0, 0.5, -1.5};
+    //     showVectorVals("Inputs:", inputVals);
+    //     myNet.feedForward(inputVals);
+
+    //     // Collect the net's actual output results:
+    //     myNet.getResults(resultVals);
+    //     showVectorVals("Outputs:", resultVals);
+
+    //     // Simulate getting target output values:
+    //     targetVals = {0.0, 1.0, 0.0, 1.0, 0.0};
+    //     showVectorVals("Targets:", targetVals);
+
+    //     myNet.backProp(targetVals);
+
+    //     // Report the recent average error:
+    //     cout << "Net recent average error: " << myNet.getRecentAverageError() << endl;
+    // }
+
+    cout << endl << "Done" << endl;
+    return 0;
+}
+
+void showVectorVals(string label, vector<double> &v) {
     cout << label << " ";
     for (unsigned i = 0; i < v.size(); ++i) {
         cout << v[i] << " ";
     }
-
     cout << endl;
 }
-
-
-int main()
-{
-    
-    TrainingData trainData("training.txt");
-
-    // e.g., { 3, 2, 1 }
-    vector<unsigned> topology;
-    trainData.getTopology(topology);
-
-    Net myNet(topology);
-
-    vector<double> inputVals, targetVals, resultVals;
-    int trainingPass = 0;
-
-    while (!trainData.isEof()) {
-        ++trainingPass;
-        cout << endl << "Pass " << trainingPass;
-
-        // Get new input data and feed it forward:
-        if (trainData.getNextInputs(inputVals) != topology[0]) {
-            break;
-        }
-        showVectorVals(": Inputs:", inputVals);
-        myNet.feedForward(inputVals);
-
-        // Collect the net's actual output results:
-        myNet.getResults(resultVals);
-        showVectorVals("Outputs:", resultVals);
-
-        // Train the net what the outputs should have been:
-        trainData.getTargetOutputs(targetVals);
-        showVectorVals("Targets:", targetVals);
-        assert(targetVals.size() == topology.back());
-
-        myNet.backProp(targetVals);
-
-        // Report how well the training is working, average over recent samples:
-        cout << "Net recent average error: "
-                << myNet.getRecentAverageError() << endl;
-    }
-
-    cout << endl << "Done" << endl;
-}
-

@@ -1,11 +1,13 @@
-#include <vector>
-#include <iostream>
-#include <cstdlib>
-#include <cassert>
-#include <cmath>
-#include <fstream>
-#include <sstream>
+// Network.h
+#ifndef NETWORK_H
+#define NETWORK_H
 
+#include <vector>
+#include "Neuron.h"
+
+using namespace std;
+
+typedef vector<Neuron> Layer;
 
 class Net
 {
@@ -15,10 +17,15 @@ public:
     void backProp(const vector<double> &targetVals);
     void getResults(vector<double> &resultVals) const;
     double getRecentAverageError(void) const { return m_recentAverageError; }
-
 private:
-    vector<Layer> m_layers; // m_layers[layerNum][neuronNum]
+    vector<Layer> m_layers; 
+    // m_layers[layerNum][neuronNum]
     double m_error;
     double m_recentAverageError;
     static double m_recentAverageSmoothingFactor;
 };
+
+double Net::m_recentAverageSmoothingFactor = 100.0; // Number of training samples to average over
+
+
+#endif // NETWORK_H
