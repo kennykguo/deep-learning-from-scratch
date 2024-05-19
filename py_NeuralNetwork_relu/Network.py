@@ -1,14 +1,15 @@
 import numpy as np
+import math
 
 class Network:
     def __init__(self):
         # Parameters
-        self.W1 = np.random.rand(15, 784) - 0.5
-        self.W1 *= 0.1;
+        self.W1 = np.random.rand(15, 784)
+        self.W1 *= (math.sqrt(2)) * math.sqrt(1/784)
         self.b1 = np.random.rand(15, 1)
         self.b1 *= 0;
         self.W2 = np.random.rand(10, 15)
-        self.W2 *= 0.1;
+        self.W2 *= (math.sqrt(2)) * math.sqrt(1/15)
         self.b2 = np.random.rand(10, 1)
         self.b2 *= 0;
         # Gradients
@@ -57,8 +58,6 @@ class Network:
         self.dW1 =  dZ1.dot(X.T) # (15 x 41000) (41000 x 784) -> (15 x 784) - - - Back propogation eq. #4
         self.db1 = np.sum(dZ1, axis = 1) # Back propogation eq. #3 - we are summing over cols in the backprop
         self.db1 = self.db1.reshape(15, 1)
-        # print("back db2", self.db2.shape)
-        # print("back b2", self.b2.shape)
 
     def update_params(self, lr):
         self.W1 = self.W1 - lr * self.dW1
@@ -93,6 +92,6 @@ class Network:
                 self.update_params(lr)
 
             print("Epoch:", i)
-            # # Calculate accuracy using the entire dataset
+            # Calculate accuracy using the entire dataset
             Z1, A1, Z2, A2 = self.forward_prop(X_dev)
             print("Accuracy:", self.get_accuracy(self.get_predictions(A2), Y_dev))
