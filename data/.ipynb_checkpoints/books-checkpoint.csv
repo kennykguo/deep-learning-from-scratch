@@ -1,0 +1,182 @@
+# Pragmatic Thinking and Learning
+
+### Introduction
+
+- Software is imagined and created in our heads
+- You don’t get taught, you have to learn
+- Pragmatism is to do what works for you
+- Wetware - human brain cells analogous to computer systems
+- Speaking, thinking, writing and typing are different tasks and use different portions of the brain
+- Always consider the context
+
+### Journey from novice to expert
+
+- Dreyfus model of skill acquisition: Five discrete stages through which one must pass on the journey from novice to expert
+- Construct theory
+- Event theories can be measured - verified and proven
+- Construct theories are abstractions and only evaluated in terms of usefulness
+- eg. the mind is an abstraction
+- Its often difficult for experts to explain their actions at a fine level of detail
+- It is hard to articulate expertise
+- Novices need clear and context free rules to operate, which would render the expert ineffective
+- As you move from novice to expert, your mental models, perception, and problem solving change
+- Stage 1: Novices
+    - Specifically performing a skill results in change of thinking
+    - Novices are very concerned about success, have little experience to guide them, have uncertainty, don’t want to particularly learn, just want to accomplish a goal, do not know how to respond to mistakes, and are vulnerable to confusion
+    - They can be effective when given context-free rules - When X happens, do Y.
+    - Novices are flummoxed with deciding which rules are relevant
+    - With context-free rules, you can never specify everything fully (infinite regression)
+    - Rules should get you started
+- Stage 2: Advanced beginners
+    - Start to break away from fixed rules, and task on their own but have difficulty troubleshooting
+    - They want information quick
+    - Can start using advice in the correct context based on similar situations but barely
+    - There is no big picture or unity
+- Stage 3: Competent
+    - You can develop conceptual models and work with them
+    - You can troubleshoot problems and figure out how to solve novel problems you haven’t faced before
+    - Seek out advice and apply advice from experts to use effectively
+    - The competent seeks out to solve problems
+- Stage 4: Proficient
+    - You need the big picture
+    - They want to understand the larger conceptual framework and don’t want anything oversimplified
+    - Proficient practitioners can correct previous poor task performance, reflect on how they have done, revise their approach, and perform better. This is not available before this stage
+    - You learn from other’s experiences
+    - You can apply maxims - proverbial and fundamental truths that can be applied to a situation at hand
+    - eg. “test everything that can possibly break”
+    - The proficient practitioner has the experience to apply judgment and figure out what maxims to apply, and what it means, *in context.*
+    - They know what happens next, and what needs to change, if anything.
+    - Proficient practitioners take advantage of agile methods
+- Stage 5: Expert
+    - They are the primary sources of information in a field, and they continually look for better ways to do things
+    - Experts work by intuition, not by reason
+    - The expert knows the difference between irrelevant details and import details
+- When you are not skilled, you are more likely to think you are an expert
+- Second order incompetence - being unskilled and unaware of it
+- Ignorance more frequency begets confidence than does knowledge
+- When you become an expert, you become aware how little you know
+- Rules ruin experts
+- Race sheep, herd race-horses
+- Novices need to be given direction and herded. Agile development doesn’t work well on a team composed of solely novices/advanced beginners
+- Practices can never be formalized, they must always be worked out in real time
+- The three most important changes along the way include:
+    - Moving away from rules to intuition
+    - Change in perception - problems are no longer a collection of equally relevant bits, but rather one where only certain bits are relevant
+    - Change from being a detached observer to an involved part of the system itself
+- Most people for most skills never get higher than advanced beginner
+- Increase in skill increases metacognitive ability
+- The recognizes patterns in context
+- It takes a minimum of a decade to become an expert
+- Effort is not enough, you need deliberate practice
+    - Well defined task
+    - Task is challenging enough, but doable
+    - Environment needs to supply informative feedback
+    - Provides opportunity for repetition and correction of errors
+- Accept responsibility: Programmers often implement something they know is wrong, ignoring the warning signs. Feedback is necessary
+- Accept the responsibility to NOT follow the rules if necessary
+- No expertise without experience, and no substitute for experience. Experience can be more efficient and effective
+- Imitate existing practice, slowly assimilate the tacit knowledge and experience over time, and then go beyond imitation and innovate
+- Winners don’t carry losers - what value do you bring?
+- The model is a tool, not a mirror
+- Rules cannot tell you the most relevant activities to perform or the correct path, they are only to help you get started
+- A model is not reality
+- Problem solving can’t be formalized
+- Formal models hinder creativity
+- Experts are alienated
+- Spelling too much detail
+- Oversimplification of complex situations
+- Typical usually never happens
+- Reliance on rules should decrease as ability to judge increases
+- Object Oriented Design is based on context that form relationships
+- Novices need a problem space
+- Learning to learn is subject to the Dreyfus model
+
+### This is your brain
+
+- Memory → CPU #1 →CPU #2
+- Linear processing style, and rich mode
+- Rich mode is critical for intuition
+- L-mode contributes to actual input
+- R-mode is asynchronous
+- Thoughts occur before words
+- If you keep track of ideas, you’ll get more of them
+- L-mode is verbal, analytic and rational
+- Many valid thought processes are not rational
+- R-mode is non-verbal, non-rational and holistic
+- Synthetic learning - prototyping, and independent test units. Learn by building
+- Competing on commoditization
+- Attractive things work better
+- Being happy broadens your thought process and brings more of the brain hardware online
+- Artificial environments create artificial data
+- Art comes not from creation, but the selection of infinite choices
+- Pattern and intuition is key to becoming an expert
+- Believe in plasticity of the brain to increase your ability
+- Think your brain has more capacity for learning
+
+### Get in your right mind
+
+- To become more creative, activate more neural pathways
+- Use tactile enhancement
+- Cross-sensory feedback - verbal, written, visual
+- Change your environment
+- Slightly altered state of consciousness that allows you to see well
+- Give L-mode a job it does not want
+- R-mode to L-mode flow for learning
+- Let R-mode lead, then switch to L-mode to “productize it”
+- Creativity is limited when you memorize minor facts and not grasp the whole
+- Create a shitty first draft
+- Creativity is combining incompatible ideas
+- Any software system should be guided by a metaphor
+- For each image that crosses your mind, look at the image, try to see all details
+- Describe it out loud, imagine the image with all five senses, and use present tense
+- Morning pages - first thing in the morning, 3 pages long hand, do not censor anything and do not skip a day
+- Unguarded brain dump
+- Rather than preventing a bug, try to thing of ways to cause the bug
+- Assuming one right answer, thinking a solution is not logical, all are mental locks
+
+### Debug your mind
+
+- We make decisions and solve problems based on faulty memory and emotional state
+- Cognitive biases
+    - Anchoring - seeing an umber affects how you predict or decide a quantity
+    - Fundamental attribution error - ascribing other people’s behaviour to their personality - context dependent
+    - Self-serving bias - protective bias and lack of taking responsibility for failure
+    - Need for closure - avoiding uncertainty
+    - Confirmation bias
+    - Exposure effect - prefer tools that are familiar even if they don’t work well
+    - Hawthorne effect - behaving differently when watched
+    - False memory - imagined events with real memory - every read is a write
+    - Symbolic reduction fallacy - avoid complexity
+    - Nominal fallacy - naming to reduce its complexity
+- Platonic fold - idealized simplified forms leaves gaps
+- Deferring decisions to the future, when you are more wise and knowledgable
+- Humans are bad at trying to extrapolate future events from previous events - we assume that events form a more or less stable, linear progression with easily defined cause and effect
+- Correlation is not causation
+- Determining causation is a different beast than observing correlation
+- General affinity
+- Personality tendencies
+- Hardware bugs
+- Lead with intuition, follow with linear feedback
+
+### Learn deliberately
+
+- Education is something drawn out of the learner
+- Random approach leads to random results
+- The mind is not a vessel to be filled but a fire to be kindled
+- Knowledge is not important - mental models, questions you asked, and your experiences are more relevant to your performance
+- You need feedback to understand your progress
+- A goal lis a desired state
+- An objective is a something you do to get closer to a goal
+- SMART - specific, measurable, attainable, relevant, time-boxed
+- Treat your learning portfolio like an investment portfolio
+    - Have a plan, diversify, make an active not passive investment, and make a regular investment
+- All knowledge investments have value
+- Iterate your plan
+- SQ3R - Survey, Question, Read, Recite, Review
+- Test-driven learning
+
+Gain experience
+
+Manage focus
+
+Beyond expertise
