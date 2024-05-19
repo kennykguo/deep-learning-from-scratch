@@ -1,20 +1,25 @@
 import numpy as np
 
 class Network:
-    def __init__(self, batch_size, lr):
+    def __init__(self):
         # Parameters
         self.W1 = np.random.rand(15, 784) - 0.5
         self.W1 *= 0.1;
-        self.b1 = np.random.zeros(15, batch_size)
+        self.b1 = np.random.rand(15, 1)
+        self.b1 *= 0;
         self.W2 = np.random.rand(10, 15)
-        self.b2 = np.random.rand(10, batch_size)
+        self.W2 *= 0.1;
+        self.b2 = np.random.rand(10, 1)
+        self.b2 *= 0;
         # Gradients
-        self.dW1 = np.random.zeros(15, 784)
-        self.db1 = np.random.zeros(15, batch_size)
-        self.dW2 = np.random.zeros(10, 15)
-        self.db2 = np.random.zeros(10, batch_size)
-        self.lr = lr
-        self.batch_size = batch_size
+        self.dW1 = np.random.rand(15, 784)
+        self.dW1 *= 0;
+        self.db1 = np.random.rand(15, 1)
+        self.db1 *= 0;
+        self.dW2 = np.random.rand(10, 15)
+        self.dW2 *= 0;
+        self.db2 = np.random.rand(10, 1)
+        self.db2 *= 0;
     
     def ReLU(self, Z): # Takes in a scalar, returns a scalar
         return np.maximum(Z, 0)
@@ -35,59 +40,59 @@ class Network:
         return matrix_Y
 
     def forward_prop(self, X):
-        Z1 = self.W1.dot(X) + self.b1 # (10 x 784) (784 x n) + (10 x n) -> (10 x n)
+        Z1 = self.W1.dot(X) + self.b1 # (15 x 784) (784 x 32) + (15 x 1) -> (15 x 32)
         A1 = self.ReLU(Z1)
-        Z2 = self.W2.dot(A1) + self.b2 # (10 x 10) (10 x n) + (10 x n) = (10 x n)
+        Z2 = self.W2.dot(A1) + self.b2 # (10 x 15) (15 x 32) + (10 x 1) = (10 x 32)
         A2 = self.softmax(Z2)
+        # print("Forward ", self.b2.shape)
         return Z1, A1, Z2, A2
 
-    def back_prop(self, Z1, A1, A2, W2, X, Y):
+    def back_prop(self, Z1, A1, A2, X, Y, batch_size):
         mat_Y = self.create(Y)
-        dZ2 = (1 / self.batch_size) * (A2 - mat_Y) # 10 x 41000 - - - Back propogation eq. #1
-        self.dW2 = dZ2.dot(A1.T) # (10 x 41000) (41000 x 10) -> (10 x 10) - - - Back propogation eq. #4
-        self.db2 = np.sum(dZ2, axis = 1) # Back propogation eq. #3
-        dZ1 = (1 / self.batch_size) * (W2.T.dot(dZ2) * self.der_ReLU(Z1)) # (10 x 10) (10 x 41000) * elementwise (1 or 0) Back propogation eq. #2
-        self.dW1=  dZ1.dot(X.T) # (10 x 41000) (41000 x 784) -> (10 x 784) - - - Back propogation eq. #4
-        self.db1 = np.sum(dZ2, axis = 1) # Back propogation eq. #3
+        dZ2 = (1 / batch_size) * (A2 - mat_Y) # (10 x 32) - - - Back propogation eq. #1
+        self.dW2 = dZ2.dot(A1.T) # (10 x 32) (32 x 15) -> (10 x 15) - - - Back propogation eq. #4
+        self.db2 = np.sum(dZ2, axis = 1) # Back propogation eq. #3 - we are summing over cols in the backprop
+        self.db2 = self.db2.reshape(10, 1)
+        dZ1 = (1 / batch_size) * (self.W2.T.dot(dZ2) * self.der_ReLU(Z1)) # (15 x 10) (10 x 41000) * elementwise (1 or 0) Back propogation eq. #2
+        self.dW1 =  dZ1.dot(X.T) # (15 x 41000) (41000 x 784) -> (15 x 784) - - - Back propogation eq. #4
+        self.db1 = np.sum(dZ1, axis = 1) # Back propogation eq. #3 - we are summing over cols in the backprop
+        self.db1 = self.db1.reshape(15, 1)
+        # print("back db2", self.db2.shape)
+        # print("back b2", self.b2.shape)
 
-    def update_params(self):
-        self.W1 = self.W1 - self.lr * self.dW1
-        self.b1 = self.b1 - self.lr * self.db1
-        self.W2 = self.W2 - self.lr * self.dW2
-        self.b2 = self.b2 - self.lr * self.db2
-
+    def update_params(self, lr):
+        self.W1 = self.W1 - lr * self.dW1
+        self.b1 = self.b1 - lr * self.db1
+        self.W2 = self.W2 - lr * self.dW2
+        self.b2 = self.b2 - lr * self.db2
 
     def get_predictions(self, A2):
-        return np.argmax(A2, 0)
+        return np.argmax(A2, 0) # Return argmax along the rows (each example)
 
-    def get_accuracy(self, predictions, Y):
-        # print(predictions)
-        # print(Y)
+    def get_accuracy(self, predictions, Y): # prections and Y should be the same size
         return np.sum(predictions == Y) / Y.size
     
-    def stochastic_gradient_descent(self, X, Y, epochs, alpha, batch_size):
+    def stochastic_gradient_descent(self, X_train, Y_train, X_dev, Y_dev, epochs, batch_size, lr):
         # Calculate the number of examples
-        num_examples = X.shape[1]
+        num_examples = X_train.shape[1]
         for i in range(epochs):
-
             # Generate a random permutation of indices
             permuted_indices = np.random.permutation(num_examples)
             # Shuffle both X and Y using the same permutation of indices
-            X_shuffled = X[:, permuted_indices]
-            Y_shuffled = Y[permuted_indices]
-
+            X_shuffled = X_train[:, permuted_indices]
+            Y_shuffled = Y_train[permuted_indices]
             # Iterate over the shuffled data in batches
             for j in range(0, num_examples, batch_size):
                 X_batch = X_shuffled[:, j:j + batch_size]
                 Y_batch = Y_shuffled[j:j + batch_size]
                 # Forward propagation
-                Z1, A1, Z2, A2 = self.forward_prop(W1, b1, W2, b2, X_batch, batch_size)
+                Z1, A1, Z2, A2 = self.forward_prop(X_batch)
                 # Back propagation
-                dW1, db1, dW2, db2 = self.back_prop(Z1, A1, Z2, A2, W1, W2, X_batch, Y_batch, batch_size)
+                self.back_prop(Z1, A1, A2, X_batch, Y_batch, batch_size)
                 # Update weights
-                W1, b1, W2, b2 = self.update_params(W1, b1, W2, b2, dW1, db1, dW2, db2, alpha)
+                self.update_params(lr)
 
             print("Epoch:", i)
-            # Calculate accuracy using the entire dataset
-            Z1, A1, Z2, A2 = self.forward_prop(W1, b1, W2, b2, X_batch, batch_size)
-            print("Accuracy:", self.get_accuracy(self.get_predictions(A2), Y_batch))
+            # # Calculate accuracy using the entire dataset
+            Z1, A1, Z2, A2 = self.forward_prop(X_dev)
+            print("Accuracy:", self.get_accuracy(self.get_predictions(A2), Y_dev))
