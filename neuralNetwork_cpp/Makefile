@@ -1,8 +1,19 @@
-# "all" is the name of the default target, running "make" without params would use it
-all: executable1
+CC = g++
+CFLAGS = -std=c++11 -Wall
 
-# for C++, replace CC (c compiler) with CXX (c++ compiler) which is used as default linker
-CXX=$(CXX)
+# Define the source files and object files
+SRCS = main.cpp Network.cpp LinearLayer.cpp Neuron.cpp
+OBJS = $(SRCS:.cpp=.o)
+TARGET = my_program
 
-# tell which files should be used, .cpp -> .o make would do automatically
-executable1: Neuron.o Network.o
+# Rule to compile .cpp files into .o files
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $< -o $@
+
+# Rule to link the object files and create the executable
+$(TARGET): $(OBJS)
+    $(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
+
+# Rule to clean the object files and the executable
+clean:
+    rm -f $(OBJS) $(TARGET)

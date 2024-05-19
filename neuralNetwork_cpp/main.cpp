@@ -1,17 +1,23 @@
-#include <cstdio>
-#include <Network.cpp>
-
-using namespace std;
-
+#include <iostream>
+#include "Network.h" // Include Network header
 
 int main() {
-    int modelLayers[] = {3, 2, 1}; // Example layer sizes
-    int fan_in[] = {3, 2}; // Example fan_in for each layer
-    int fan_out[] = {2, 1}; // Example fan_out for each layer
+    // Define your network architecture
+    int modelLayers[] = {3, 4, 5}; // Example architecture: 3 input neurons, 4 neurons in hidden layer, 5 output neurons
     int numLayers = sizeof(modelLayers) / sizeof(modelLayers[0]);
-    Network myNetwork(modelLayers, numLayers, fan_in, fan_out);
 
-    // Use myNetwork...
+    // Create a Network object
+    Network myNetwork(modelLayers, numLayers);
+
+    // Test your network by calling its functions
+    // Example: Call ReLU function
+    // Neuron** exampleMatrix = new Neuron*[3]; // Example input matrix with 3 rows
+    // for (int i = 0; i < 3; ++i) {
+    //     exampleMatrix[i] = new Neuron[4]; // Example input matrix with 4 columns
+    // }
+    // myNetwork.ReLU(exampleMatrix, 3, 4); // Example call to ReLU function
+
+    // Perform other tests or operations as needed...
 
     return 0;
 }

@@ -11,7 +11,7 @@ Network::Network(int* modelLayers, int numLayers) {
     for (int i = 0; i < numLayers - 1; i++) {
         new (&networkLayers[i]) Layer(modelLayers[i], modelLayers[i + 1]);
     }
-    new (&networkLayers[numLayers]) Layer(0,0);
+    new (&networkLayers[numLayers - 1]) Layer(0, 0);
 }
 
 

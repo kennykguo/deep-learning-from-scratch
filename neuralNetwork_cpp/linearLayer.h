@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <Neuron.cpp>
-#include <Network.h>
+#include <Network.cpp>
+#include <Layer.h>
 using namespace std;
 
 class Layer

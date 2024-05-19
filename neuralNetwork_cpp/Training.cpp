@@ -1,5 +1,5 @@
-#include <linearLayer.cpp>
-#include <cstdio>
-#include <Training.h>
-using namespace std;
+// #include <LinearLayer.cpp>
+// #include <cstdio>
+// #include <Training.h>
+// using namespace std;
 
