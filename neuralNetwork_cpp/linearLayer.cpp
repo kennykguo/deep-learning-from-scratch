@@ -1,7 +1,8 @@
 #include <cstdio>
-#include <linearLayer.h>
+#include <LinearLayer.h>
 using namespace std;
 
+// Default constructor
 Layer::Layer(int fan_in, int fan_out) {
     this->fan_in = fan_in;
     this->fan_out = fan_out;

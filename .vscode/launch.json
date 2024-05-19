@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/kenny/Developer/vscode/neural-network-models/neuralNetwork_cpp",
-      "program": "/Users/kenny/Developer/vscode/neural-network-models/neuralNetwork_cpp/build/Debug/outDebug"
+      "cwd": "/Users/kenny/Developer/vscode/neural-network-models",
+      "program": "/Users/kenny/Developer/vscode/neural-network-models/build/Debug/outDebug"
     }
   ]
 }
