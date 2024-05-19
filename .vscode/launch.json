@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/kenny/Developer/vscode/deep_learning_from_scratch/NeuralNetwork_cpp",
-      "program": "/Users/kenny/Developer/vscode/deep_learning_from_scratch/NeuralNetwork_cpp/build/Debug/outDebug"
+      "cwd": "/Users/kenny/Developer/vscode/deep_learning_from_scratch/cpp_NeuralNetwork",
+      "program": "/Users/kenny/Developer/vscode/deep_learning_from_scratch/cpp_NeuralNetwork/build/Debug/outDebug"
     }
   ]
 }

@@ -1,10 +1,9 @@
+#include <iostream> // Include for cout
 #include "Network.h"
-using namespace std;
 
 int main() {
     // Define the model layers
     int modelLayers[] = {3, 4, 2}; // Example: 3 input neurons, 4 neurons in hidden layer, 2 output neurons
-    cout<<"Hello";
 
     // Create a network with the specified model layers
     Network network(modelLayers, sizeof(modelLayers) / sizeof(modelLayers[0]));
@@ -21,21 +20,35 @@ int main() {
 
     Neuron** output = network.forwardPropagate(weightsMatrix, weightsRows, weightsCols, inputMatrix, inputsRows, inputCols, biasMatrix);
 
-    // Example: Perform ReLU activation on the output
-    // Note: Replace the below code with your actual activation function
-    network.ReLU(output, weightsRows, inputCols);
-
-    // Example: Cleanup and deallocate memory
-    // Note: Replace the below code with your memory deallocation logic
+    // Example: Print out weightsMatrix
+    std::cout << "Weights Matrix:\n";
     for (int i = 0; i < weightsRows; ++i) {
-        delete[] weightsMatrix[i];
-        delete[] inputMatrix[i];
-        delete[] output[i];
+        for (int j = 0; j < weightsCols; ++j) {
+            std::cout << weightsMatrix[i][j].value << " ";
+        }
+        std::cout << "\n";
     }
-    delete[] weightsMatrix;
-    delete[] inputMatrix;
-    delete[] biasMatrix;
-    delete[] output;
+
+    // Example: Print out inputMatrix
+    std::cout << "Input Matrix:\n";
+    for (int i = 0; i < inputsRows; ++i) {
+        for (int j = 0; j < inputCols; ++j) {
+            std::cout << inputMatrix[i][j].value << " ";
+        }
+        std::cout << "\n";
+    }
+
+    // Example: Print out output
+    std::cout << "Output Matrix:\n";
+    for (int i = 0; i < weightsRows; ++i) {
+        for (int j = 0; j < inputCols; ++j) {
+            std::cout << output[i][j].value << " ";
+        }
+        std::cout << "\n";
+    }
+
+    // Cleanup (delete dynamic memory, etc.)
+    // Note: Replace with actual cleanup code
 
     return 0;
 }
