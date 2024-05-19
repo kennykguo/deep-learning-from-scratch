@@ -1,5 +1,5 @@
-#include <cstdio>
-#include <Neuron.h>
+#include "Neuron.h"
+#include <cstdlib> // Include for rand()
 
 using namespace std;
 

@@ -1,18 +1,21 @@
-#include <cstdio>
-#include <Neuron.cpp>
-#include <Network.cpp>
-#include <Layer.h>
-using namespace std;
+#pragma once
 
-class Layer
-{
+// Forward declaration of Network class to avoid circular dependency
+class Network;
+
+#include "Neuron.h" // Include Neuron.h for Neuron class
+
+
+class Layer {
 public:
-    // Each layer will have attributes which include a matrix of output activations, a weights matrix, and a bias matrix
     int fan_in;
     int fan_out;
     Neuron** weightsMatrix;
     Neuron* biasMatrix;
     Neuron** outputActivations;
-    // Default constuctor
-    Layer(int fan_in, int fan_out);
+    Network& network; // Reference to a Network object
+
+    // Constructor with initialization list
+    Layer(Network& network, int fan_in, int fan_out);
 };
+
