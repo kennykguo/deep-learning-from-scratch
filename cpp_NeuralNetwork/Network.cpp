@@ -1,7 +1,10 @@
 #include "Network.h"
 
+#include <iostream>
+using namespace std;
 
 Network::Network(int* modelLayers, int numLayers) {
+    cout << "Created a Network" << '\n';
     buffer = new char[sizeof(Layer) * numLayers];
     networkLayers = reinterpret_cast<Layer*>(buffer);
     for (int i = 0; i < numLayers - 1; i++) {
