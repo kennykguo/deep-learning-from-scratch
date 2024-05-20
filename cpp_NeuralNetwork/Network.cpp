@@ -88,18 +88,3 @@ Neuron** Network::matrixMultiply(Neuron** matrixOne, int rowsOne, int colsOne, N
 
     return result;
 }
-
-
-
-Neuron** Network::forwardPropagate(Neuron** weightsMatrix, int weightsRows, int weightsCols, Neuron** inputMatrix, int inputsRows, int inputCols, Neuron* biasMatrix) {
-
-    Neuron** output = matrixMultiply(weightsMatrix, weightsRows, weightsCols, inputMatrix, inputsRows, inputCols);
-
-    for (int i = 0; i < weightsRows; ++i) {
-        for (int j = 0; j < inputCols; ++j) {  // Corrected loop range
-            output[i][j].value += biasMatrix[j].value;
-        }
-    }
-
-    return output;
-}

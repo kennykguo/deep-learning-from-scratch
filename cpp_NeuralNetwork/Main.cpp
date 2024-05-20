@@ -1,5 +1,6 @@
 #include <iostream> // Include for cout
 #include "Network.h"
+// #include "Neuron.h"
 
 int main() {
     cout << "Starting program\n";
@@ -7,44 +8,22 @@ int main() {
     int modelLayers[] = {3, 4, 2}; // Example: 3 input neurons, 4 neurons in hidden layer, 2 output neurons
     Network network(modelLayers, sizeof(modelLayers) / sizeof(modelLayers[0]));
 
-    // Example: Perform forward propagation
-    // Note: Replace the below code with your actual data and operations
-    // Neuron** weightsMatrix = nullptr; // Example: Get weights matrix from somewhere
-    // Neuron** inputMatrix = nullptr;   // Example: Get input matrix from somewhere
-    // Neuron* biasMatrix = nullptr;     // Example: Get bias matrix from somewhere
-    // int weightsRows = 0;               // Example: Set weights matrix rows
-    // int weightsCols = 0;               // Example: Set weights matrix columns
-    // int inputsRows = 0;                // Example: Set input matrix rows
-    // int inputCols = 0;                 // Example: Set input matrix columns
 
-    // Neuron** output = network.forwardPropagate(weightsMatrix, weightsRows, weightsCols, inputMatrix, inputsRows, inputCols, biasMatrix);
+    Neuron** input = new Neuron*[3];
+    for (int i = 0; i < 3; ++i) {
+        input[i] = new Neuron[3];
+    }
 
-    // Example: Print out weightsMatrix
-    // std::cout << "Weights Matrix:\n";
-    // for (int i = 0; i < weightsRows; ++i) {
-    //     for (int j = 0; j < weightsCols; ++j) {
-    //         std::cout << weightsMatrix[i][j].value << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
+    network.networkLayers[0].outputActivations = input;
 
-    // Example: Print out inputMatrix
-    // std::cout << "Input Matrix:\n";
-    // for (int i = 0; i < inputsRows; ++i) {
-    //     for (int j = 0; j < inputCols; ++j) {
-    //         std::cout << inputMatrix[i][j].value << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
 
-    // // Example: Print out output
-    // std::cout << "Output Matrix:\n";
-    // for (int i = 0; i < weightsRows; ++i) {
-    //     for (int j = 0; j < inputCols; ++j) {
-    //         std::cout << output[i][j].value << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
+    // Forward propagation
+    for (int layerNum = 0; layerNum<network.numLayers - 1; layerNum++)
+    {
+        network.networkLayers[layerNum + 1].outputActivations = network.networkLayers[layerNum].forwardPropagate(network, network.networkLayers[layerNum].weightsMatrix, network.networkLayers[layerNum].fan_in, network.networkLayers[layerNum].fan_out, network.networkLayers[layerNum].outputActivations, network.networkLayers[layerNum].output_rows, network.networkLayers[layerNum].output_cols, network.networkLayers[layerNum].biasMatrix);
+    }
+
+    
 
     // // Cleanup (delete dynamic memory, etc.)
     // // Note: Replace with actual cleanup code
