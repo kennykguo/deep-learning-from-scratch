@@ -1,0 +1,57 @@
+def stochastc_gradient_descent(X_train, X_dev, Y_train, Y_dev, epochs, learning_rate):
+    # Initialize parameters
+    layer_weights, layer_bias, layer_output, fc_weights, fc_bias = params()
+    batch_size = 100  # Number of examples to process before updating parameters
+
+    for i in range(epochs):
+        print("Epoch:", i+1)
+        batch_gradients = [0, 0, 0, 0]  # Accumulate gradients over the batch
+        for batch_start in range(0, len(X_train), batch_size):
+            batch_end = min(batch_start + batch_size, len(X_train))
+            for j in range(batch_start, batch_end):
+                # Get a single training example
+                layer_input = X_train[:, :, j]
+                label = Y_train[j]
+
+                # Forward propagation
+                layer_output, layer_pool, layer_indices, final_output = forward_propagation(
+                    layer_input, layer_weights, layer_bias, layer_output, fc_weights, fc_bias
+                )
+
+                # Back propagation
+                delta_conv_weights, delta_conv_bias, delta_fc_weights, delta_fc_bias = back_prop(
+                    layer_input, layer_output, layer_pool, layer_indices, final_output, label,
+                    layer_weights, layer_bias, fc_weights, fc_bias
+                )
+
+                # Accumulate gradients
+                batch_gradients[0] += delta_conv_weights
+                batch_gradients[1] += delta_conv_bias
+                batch_gradients[2] += delta_fc_weights
+                batch_gradients[3] += delta_fc_bias
+
+            # Update parameters after processing the batch
+            layer_weights, layer_bias, fc_weights, fc_bias = update_params(
+                layer_weights, layer_bias, fc_weights, fc_bias,
+                *[grad / (batch_end - batch_start) for grad in batch_gradients],  # Average gradients
+                learning_rate
+            )
+
+        # Get the accuracy
+        counter = 0
+        for j in range(750):
+            test_input = X_dev[:, :, j]
+            layer_output, layer_pool, layer_indices, final_output = forward_propagation(
+                test_input, layer_weights, layer_bias, layer_output, fc_weights, fc_bias
+            )
+            prediction = get_prediction(final_output)
+            predicted_label = prediction[0]
+            if Y_dev[j] == predicted_label:
+                counter += 1
+        print("Accuracy:", counter / 750)
+
+    return layer_weights, layer_bias, layer_output, fc_weights, fc_bias
+
+
+
+
