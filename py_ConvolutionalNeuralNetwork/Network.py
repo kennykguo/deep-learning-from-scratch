@@ -27,11 +27,12 @@ class ConvolutionalNN:
         self.delta_gamma_fc = np.zeros_like(self.gamma_fc)
         self.beta_fc = np.zeros((10, 1))
         self.delta_beta_fc = np.zeros_like(self.beta_fc)
-
+        
+        # Accuracies list
         self.accuracies = [];
 
-
-    def max_pooling(input_data):
+    # All helper functions must be declared with self as the first argument since they are methods as part of the class
+    def max_pooling(self, input_data):
         # (24, 24, 2)
         input_height, input_width, input_depth = input_data.shape
 
@@ -60,7 +61,7 @@ class ConvolutionalNN:
 
         return output_data, indices
 
-    def batch_norm_forward(x, gamma, beta, eps=1e-5):
+    def batch_norm_forward(self, x, gamma, beta, eps=1e-5):
         mean = np.mean(x, axis=0)
         variance = np.var(x, axis=0)
         x_normalized = (x - mean) / np.sqrt(variance + eps)
@@ -68,7 +69,7 @@ class ConvolutionalNN:
         cache = (x, x_normalized, mean, variance, gamma, beta, eps)
         return out, cache
 
-    def batch_norm_backward(dout, cache):
+    def batch_norm_backward(self, dout, cache):
         x, x_normalized, mean, variance, gamma, beta, eps = cache
         N = x.shape[0]
         
@@ -82,7 +83,7 @@ class ConvolutionalNN:
         dx = dx_normalized / np.sqrt(variance + eps) + dvariance * 2 * (x - mean) / N + dmean / N
         return dx, dgamma, dbeta
 
-
+    # Forward propogation
     def forward_propagation(self, layer_input, dropout_rate):
         # Convolution
         layer_output = np.zeros((24, 24, 2))
@@ -91,8 +92,9 @@ class ConvolutionalNN:
         layer_output = layer_output + self.layer_bias   # (24, 24, 2)
         
         # Batch Normalization for Conv Layer
+        # Functions that access the attributes of the class should not pass in a self to the function itself when called
         layer_output, bn_cache_conv = self.batch_norm_forward(layer_output, self.gamma_conv, self.beta_conv)
-        
+
         # Activation layer
         layer_output = self.ReLU(layer_output)  # (24, 24, 2)
         
@@ -100,7 +102,7 @@ class ConvolutionalNN:
         layer_pool, layer_indices = self.max_pooling(layer_output)  # (12, 12, 2)
         
         # Flattening
-        self.layer_pool = layer_pool.reshape(288, 1) # (288, 1)
+        layer_pool = layer_pool.reshape(288, 1) # (288, 1)
         
         # Dropout
         dropout_mask = (np.random.rand(*layer_pool.shape) < dropout_rate) / dropout_rate
@@ -160,46 +162,46 @@ class ConvolutionalNN:
         
 
     def update_params(self, learning_rate):
-        layer_weights -= learning_rate * self.delta_conv_weights
-        layer_bias -= learning_rate * self.delta_conv_bias
-        fc_weights -= learning_rate * self.delta_fc_weights
-        fc_bias -= learning_rate * self.delta_fc_bias
-        gamma_conv -= learning_rate * self.delta_gamma_conv
-        beta_conv -= learning_rate * self.delta_beta_conv
-        gamma_fc -= learning_rate * self.delta_gamma_fc
-        beta_fc -= learning_rate * self.delta_beta_fc
+        self.layer_weights -= learning_rate * self.delta_conv_weights
+        self.layer_bias -= learning_rate * self.delta_conv_bias
+        self.fc_weights -= learning_rate * self.delta_fc_weights
+        self.fc_bias -= learning_rate * self.delta_fc_bias
+        self.gamma_conv -= learning_rate * self.delta_gamma_conv
+        self.beta_conv -= learning_rate * self.delta_beta_conv
+        self.gamma_fc -= learning_rate * self.delta_gamma_fc
+        self.beta_fc -= learning_rate * self.delta_beta_fc
 
 
     # Helper functions (only using ReLU but can use others)
-    def get_prediction(A2):
+    def get_prediction(self, A2):
         return np.argmax(A2, 0)
     
-    def create(Y):
+    def create(self, Y):
         column_Y = np.zeros((10, 1))
         column_Y[Y] = 1
         column_Y = column_Y.T
         return column_Y.reshape(10,1)
     
-    def der_ReLU(Z):
+    def der_ReLU(self, Z):
         return Z > 0
     
-    def ReLU2(Z, alpha=0.01):
+    def ReLU2(self, Z, alpha=0.01):
         return np.where(Z > 0, Z, alpha * Z)
     
-    def ReLU(Z):
+    def ReLU(self, Z):
         return np.maximum(Z, 0)
     
-    def ReLU2(Z):
+    def ReLU2(self, Z):
         return np.maximum(Z, 0)
     
-    def sigmoid(z):
+    def sigmoid(self, z):
         # Compute the sigmoid function element-wise
         return 1.0 / (1.0 + np.exp(-z))
     
-    def sigmoid_prime(self,z):
+    def sigmoid_prime(self, z):
         return self.sigmoid(z)*(1-self.sigmoid(z))
     
-    def softmax(Z):
+    def softmax(self, Z):
         # Apply softmax column-wise
         exp_Z = np.exp(Z - np.max(Z, axis=0)) # Subtracting the maximum value in each column to avoid overflow
         return exp_Z / np.sum(exp_Z, axis=0)
@@ -217,7 +219,7 @@ class ConvolutionalNN:
             # Shuffle both X_train and Y_train using the same permutation of indices
             X_train_shuffled = X_train[:, :, permuted_indices]
             Y_train_shuffled = Y_train[permuted_indices]
-            for batch_start in range(0, X_train_shuffled.shape[2], batch_size):
+            for batch_start in range(0, int(X_train_shuffled.shape[2]/100), batch_size):
                 batch_end = min(batch_start + batch_size, num_examples)
                 batch_gradients = [0, 0, 0, 0, 0, 0, 0, 0]  # Accumulate gradients over the batch
                 for j in range(batch_start, batch_end):
@@ -229,24 +231,24 @@ class ConvolutionalNN:
                     layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate)
                     
                     # Back propagation
-                    delta_conv_weights, delta_conv_bias, delta_fc_weights, delta_fc_bias, dgamma_conv, dbeta_conv, dgamma_fc, dbeta_fc = self.back_prop(layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask
+                    self.back_prop(layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask
                     )
                     
                     # Accumulate gradients
-                    batch_gradients[0] += delta_conv_weights
-                    batch_gradients[1] += delta_conv_bias
-                    batch_gradients[2] += delta_fc_weights
-                    batch_gradients[3] += delta_fc_bias
-                    batch_gradients[4] += dgamma_conv
-                    batch_gradients[5] += dbeta_conv
-                    batch_gradients[6] += dgamma_fc
-                    batch_gradients[7] += dbeta_fc
+                    batch_gradients[0] += self.delta_conv_weights
+                    batch_gradients[1] += self.delta_conv_bias
+                    batch_gradients[2] += self.delta_fc_weights
+                    batch_gradients[3] += self.delta_fc_bias
+                    batch_gradients[4] += self.delta_gamma_conv
+                    batch_gradients[5] += self.delta_beta_conv
+                    batch_gradients[6] += self.delta_gamma_fc
+                    batch_gradients[7] += self.delta_beta_fc
                 
                 # Average gradients after processing the batch
                 batch_gradients = [grad / batch_size for grad in batch_gradients]
                 
-                # Update parameters after processing the batch
-                layer_weights, layer_bias, fc_weights, fc_bias, gamma_conv, beta_conv, gamma_fc, beta_fc = self.update_params(learning_rate)
+                # Update parameters
+                self.update_params(learning_rate)
             
             # Get training accuracy
             counter = 0
