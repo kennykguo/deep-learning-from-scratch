@@ -1,6 +1,7 @@
 import numpy as np
-import scipy as signal
+from scipy import signal
 import math
+import matplotlib.pyplot as plt
 
 class ConvolutionalNN:
     def __init__(self):
@@ -21,12 +22,13 @@ class ConvolutionalNN:
         self.gamma_conv = np.ones((24, 24, 2))
         self.delta_gamma_conv = np.zeros_like(self.gamma_conv)
         self.beta_conv = np.zeros((24, 24, 2))
-        self.delta_beta_conv = np.zeros_like(self.delta_beta_conv)
+        self.delta_beta_conv = np.zeros_like(self.beta_conv)
         self.gamma_fc = np.ones((10, 1))
         self.delta_gamma_fc = np.zeros_like(self.gamma_fc)
         self.beta_fc = np.zeros((10, 1))
         self.delta_beta_fc = np.zeros_like(self.beta_fc)
 
+        self.accuracies = [];
 
 
     def max_pooling(input_data):
@@ -58,15 +60,37 @@ class ConvolutionalNN:
 
         return output_data, indices
 
+    def batch_norm_forward(x, gamma, beta, eps=1e-5):
+        mean = np.mean(x, axis=0)
+        variance = np.var(x, axis=0)
+        x_normalized = (x - mean) / np.sqrt(variance + eps)
+        out = gamma * x_normalized + beta
+        cache = (x, x_normalized, mean, variance, gamma, beta, eps)
+        return out, cache
+
+    def batch_norm_backward(dout, cache):
+        x, x_normalized, mean, variance, gamma, beta, eps = cache
+        N = x.shape[0]
+        
+        dbeta = np.sum(dout, axis=0)
+        dgamma = np.sum(dout * x_normalized, axis=0)
+        
+        dx_normalized = dout * gamma
+        dvariance = np.sum(dx_normalized * (x - mean) * -0.5 * np.power(variance + eps, -1.5), axis=0)
+        dmean = np.sum(dx_normalized * -1 / np.sqrt(variance + eps), axis=0) + dvariance * np.sum(-2 * (x - mean), axis=0) / N
+        
+        dx = dx_normalized / np.sqrt(variance + eps) + dvariance * 2 * (x - mean) / N + dmean / N
+        return dx, dgamma, dbeta
 
 
     def forward_propagation(self, layer_input, dropout_rate):
         # Convolution
+        layer_output = np.zeros((24, 24, 2))
         for i in range(2): # 2 filters in total
             layer_output[:,:,i] = signal.correlate2d(layer_input, self.layer_weights[:,:,i], mode='valid')
         layer_output = layer_output + self.layer_bias   # (24, 24, 2)
         
-        # Batch Normalization for Convolutional Layer
+        # Batch Normalization for Conv Layer
         layer_output, bn_cache_conv = self.batch_norm_forward(layer_output, self.gamma_conv, self.beta_conv)
         
         # Activation layer
@@ -86,11 +110,11 @@ class ConvolutionalNN:
         final_output = self.fc_weights.dot(layer_pool)  # (10, 288) (288, 1) = (10, 1)
         final_output = final_output + self.fc_bias # (10, 1) + (10, 1) = (10, 1)
         
-        # Batch Normalization for Fully Connected Layer
+        # Batch Norm for FC
         final_output, bn_cache_fc = self.batch_norm_forward(final_output, self.gamma_fc, self.beta_fc) # (10, 1)
         
         final_output = self.softmax(final_output) # (10, 1)
-        return layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc
+        return layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask
 
     def back_prop(self, layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask):
         # Backpropagate cost
@@ -98,11 +122,11 @@ class ConvolutionalNN:
         dZ = (final_output - x)  # (10, 1) - (10, 1) = (10, 1)
         
         # Backpropagate through Batch Normalization for Fully Connected Layer
-        dZ, dgamma_fc, dbeta_fc = self.batch_norm_backward(dZ, bn_cache_fc)
+        dZ, self.delta_gamma_fc, self.delta_beta_fc = self.batch_norm_backward(dZ, bn_cache_fc)
         
         # Backpropagate weights and biases for Fully Connected Layer
-        delta_fc_weights = dZ.dot(layer_pool.T)  # (10, 1) (1, 288) = (10, 288)
-        delta_fc_bias = dZ
+        self.delta_fc_weights = dZ.dot(layer_pool.T)  # (10, 1) (1, 288) = (10, 288)
+        self.delta_fc_bias = dZ
         
         # Backpropagate error
         dZ_pool_output = np.dot(self.fc_weights.T, dZ) * self.der_ReLU(layer_pool)  # (288, 10) (10, 1) = (288, 1)
@@ -127,13 +151,14 @@ class ConvolutionalNN:
         dZ_pool_input *= self.der_ReLU(layer_output)
         
         # Backpropagate through Batch Normalization
-        dZ_pool_input, dgamma_conv, dbeta_conv = self.batch_norm_backward(dZ_pool_input, bn_cache_conv)
+        dZ_pool_input, self.delta_gamma_conv, self.delta_beta_conv = self.batch_norm_backward(dZ_pool_input, bn_cache_conv)
         
         # Backpropagate Conv layer
         for i in range(2):  # For each filter in the kernel
             self.delta_conv_weights[:, :, i] = signal.correlate(layer_input, dZ_pool_input[:, :, i], mode="valid")
         self.delta_conv_bias = dZ_pool_input
         
+
     def update_params(self, learning_rate):
         layer_weights -= learning_rate * self.delta_conv_weights
         layer_bias -= learning_rate * self.delta_conv_bias
@@ -178,3 +203,79 @@ class ConvolutionalNN:
         # Apply softmax column-wise
         exp_Z = np.exp(Z - np.max(Z, axis=0)) # Subtracting the maximum value in each column to avoid overflow
         return exp_Z / np.sum(exp_Z, axis=0)
+    
+    def stochastic_gradient_descent(self, X_train, X_dev, Y_train, Y_dev, epochs, learning_rate, dropout_rate, batch_size):
+        
+        num_examples = X_train.shape[2]
+
+        for i in range(epochs):
+            print("Epoch:", i + 1)
+            
+            # Generate a random permutation of indices
+            permuted_indices = np.random.permutation(X_train.shape[2])
+            
+            # Shuffle both X_train and Y_train using the same permutation of indices
+            X_train_shuffled = X_train[:, :, permuted_indices]
+            Y_train_shuffled = Y_train[permuted_indices]
+            for batch_start in range(0, X_train_shuffled.shape[2], batch_size):
+                batch_end = min(batch_start + batch_size, num_examples)
+                batch_gradients = [0, 0, 0, 0, 0, 0, 0, 0]  # Accumulate gradients over the batch
+                for j in range(batch_start, batch_end):
+                    # Get a single training example
+                    layer_input = X_train_shuffled[:, :, j]
+                    label = Y_train_shuffled[j]
+                    
+                    # Forward propagation
+                    layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate)
+                    
+                    # Back propagation
+                    delta_conv_weights, delta_conv_bias, delta_fc_weights, delta_fc_bias, dgamma_conv, dbeta_conv, dgamma_fc, dbeta_fc = self.back_prop(layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask
+                    )
+                    
+                    # Accumulate gradients
+                    batch_gradients[0] += delta_conv_weights
+                    batch_gradients[1] += delta_conv_bias
+                    batch_gradients[2] += delta_fc_weights
+                    batch_gradients[3] += delta_fc_bias
+                    batch_gradients[4] += dgamma_conv
+                    batch_gradients[5] += dbeta_conv
+                    batch_gradients[6] += dgamma_fc
+                    batch_gradients[7] += dbeta_fc
+                
+                # Average gradients after processing the batch
+                batch_gradients = [grad / batch_size for grad in batch_gradients]
+                
+                # Update parameters after processing the batch
+                layer_weights, layer_bias, fc_weights, fc_bias, gamma_conv, beta_conv, gamma_fc, beta_fc = self.update_params(learning_rate)
+            
+            # Get training accuracy
+            counter = 0
+            for j in range(int(X_train_shuffled.shape[2]/100)):
+                test_input = X_train_shuffled[:, :, j]
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate
+                )
+                prediction = self.get_prediction(final_output)
+                predicted_label = prediction[0]
+                if Y_train_shuffled[j] == predicted_label:
+                    counter += 1
+            print("Training Accuracy:", counter / int(X_train_shuffled.shape[2]/100))
+            counter = 0
+            for j in range(500):
+                test_input = X_dev[:, :, j]
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate
+                )
+                prediction = self.get_prediction(final_output)
+                predicted_label = prediction[0]
+                if Y_dev[j] == predicted_label:
+                    counter += 1
+            print("Validation Accuracy:", counter / 500)
+        
+    def plot_accuracies(self):
+        epochs = range(1, len(self.accuracies) + 1)
+        plt.plot(epochs, self.accuracies, 'b-', label='Accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.title('Model Accuracy over Epochs')
+        plt.legend()
+        plt.grid(True)
+        plt.show()

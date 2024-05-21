@@ -14,17 +14,17 @@ class Network:
         self.W2 = np.random.rand(10, 15)
         self.W2 *= (math.sqrt(2)) * math.sqrt(1/15)
         self.b2 = np.random.rand(10, 1)
-        self.b2 *= 0;
+        self.b2 *= 0
         # Gradients
         self.dW1 = np.random.rand(15, 784)
-        self.dW1 *= 0;
+        self.dW1 *= 0
         self.db1 = np.random.rand(15, 1)
-        self.db1 *= 0;
+        self.db1 *= 0
         self.dW2 = np.random.rand(10, 15)
-        self.dW2 *= 0;
+        self.dW2 *= 0
         self.db2 = np.random.rand(10, 1)
-        self.db2 *= 0;
-        self.accuracies = [];
+        self.db2 *= 0
+        self.accuracies = []
     
     def ReLU(self, Z): # Takes in a scalar, returns a scalar
         return np.maximum(Z, 0)
