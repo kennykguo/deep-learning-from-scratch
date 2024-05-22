@@ -1,12 +1,12 @@
 import torch
 import torch.nn.functional as F
 from dataset import Dataset
-from torch_NN import Sequential, Linear, Tanh
+from py_NN.py_NN1.torch_NN.torch_architecture import Sequential, Linear, Tanh
 import os
 
 # Parameter dimensions
 epochs = 1
-batch_size = 32
+batch_size = 64
 num_input = 784
 num_hidden = 15
 num_output = 10
