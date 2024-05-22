@@ -38,3 +38,4 @@ class Dataset:
         plt.imshow(image, cmap='gray')
         plt.axis('off')  # Turn off axis
         plt.show()
+        

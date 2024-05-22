@@ -21,10 +21,13 @@ class ConvolutionalNN:
         # Batch normalization
         self.gamma_conv = np.ones((24, 24, 2))
         self.delta_gamma_conv = np.zeros_like(self.gamma_conv)
+
         self.beta_conv = np.zeros((24, 24, 2))
         self.delta_beta_conv = np.zeros_like(self.beta_conv)
+
         self.gamma_fc = np.ones((10, 1))
         self.delta_gamma_fc = np.zeros_like(self.gamma_fc)
+
         self.beta_fc = np.zeros((10, 1))
         self.delta_beta_fc = np.zeros_like(self.beta_fc)
         
@@ -58,7 +61,6 @@ class ConvolutionalNN:
                     max_indices = np.unravel_index(np.argmax(region), region.shape)
                     # Store the indices relative to the region and convert to global indices
                     indices[h, w, d] = [h*2 + max_indices[0], w*2 + max_indices[1]]
-
         return output_data, indices
 
     def batch_norm_forward(self, x, gamma, beta, eps=1e-5):
@@ -84,9 +86,8 @@ class ConvolutionalNN:
         return dx, dgamma, dbeta
 
     # Forward propogation
-    def forward_propagation(self, layer_input, dropout_rate):
+    def forward_propagation(self, layer_input, layer_output, dropout_rate):
         # Convolution
-        layer_output = np.zeros((24, 24, 2))
         for i in range(2): # 2 filters in total
             layer_output[:,:,i] = signal.correlate2d(layer_input, self.layer_weights[:,:,i], mode='valid')
         layer_output = layer_output + self.layer_bias   # (24, 24, 2)
@@ -116,9 +117,17 @@ class ConvolutionalNN:
         final_output, bn_cache_fc = self.batch_norm_forward(final_output, self.gamma_fc, self.beta_fc) # (10, 1)
         
         final_output = self.softmax(final_output) # (10, 1)
+        
         return layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask
 
+
     def back_prop(self, layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask):
+        self.delta_conv_weights *= 0
+        self.delta_conv_bias *= 0
+        self.delta_fc_weights *= 0
+        self.delta_fc_bias *= 0
+        self.delta_fc_bias = self.delta_fc_bias.reshape(10, 1)
+
         # Backpropagate cost
         x = self.create(label)
         dZ = (final_output - x)  # (10, 1) - (10, 1) = (10, 1)
@@ -210,6 +219,8 @@ class ConvolutionalNN:
         
         num_examples = X_train.shape[2]
 
+        layer_output = np.zeros((24, 24, 2))
+
         for i in range(epochs):
             print("Epoch:", i + 1)
             
@@ -220,19 +231,20 @@ class ConvolutionalNN:
             X_train_shuffled = X_train[:, :, permuted_indices]
             Y_train_shuffled = Y_train[permuted_indices]
             
+            # We generate batches for a smaller subsection of the training set (the entire training set takes too much time currently)
             for batch_start in range(0, int(X_train_shuffled.shape[2]/100), batch_size):
                 batch_end = min(batch_start + batch_size, num_examples)
-                batch_gradients = [0, 0, 0, 0, 0, 0, 0, 0]  # Accumulate gradients over the batch
+                batch_gradients = [0, 0, 0, 0, 0, 0, 0, 0]  # Accumulate gradients over the batch and reset them to zero at each loop of rebatching
                 for j in range(batch_start, batch_end):
                     # Get a single training example
                     layer_input = X_train_shuffled[:, :, j]
                     label = Y_train_shuffled[j]
                     
-                    # Forward propagation
-                    layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate)
+                    # Forward propagation (same input as in Jupyter)
+                    layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, layer_output, dropout_rate)
                     
                     # Back propagation
-                    self.back_prop(layer_input, layer_output, layer_pool, layer_indices, final_output, label,  bn_cache_conv, bn_cache_fc, dropout_mask
+                    self.back_prop(layer_input, layer_output, layer_pool, layer_indices, final_output, label, bn_cache_conv, bn_cache_fc, dropout_mask
                     )
                     
                     # Accumulate gradients
@@ -255,7 +267,7 @@ class ConvolutionalNN:
             counter = 0
             for j in range(int(X_train_shuffled.shape[2]/100)):
                 test_input = X_train_shuffled[:, :, j]
-                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, dropout_rate
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, layer_output, dropout_rate
                 )
                 prediction = self.get_prediction(final_output)
                 predicted_label = prediction[0]
@@ -266,7 +278,7 @@ class ConvolutionalNN:
             counter = 0
             for j in range(500):
                 test_input = X_dev[:, :, j]
-                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, dropout_rate
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, layer_output, dropout_rate
                 )
                 prediction = self.get_prediction(final_output)
                 predicted_label = prediction[0]
@@ -274,6 +286,12 @@ class ConvolutionalNN:
                     counter += 1
             print("Validation Accuracy:", counter / 500)
         
+        plt.imshow(layer_output[:,:,1], cmap='gray')
+        plt.axis('off')  # Turn off axis
+        plt.show()
+        plt.imshow(layer_output[:,:,0], cmap='gray')
+        plt.axis('off')  # Turn off axis
+        plt.show()
     def plot_accuracies(self):
         epochs = range(1, len(self.accuracies) + 1)
         plt.plot(epochs, self.accuracies, 'b-', label='Accuracy')
