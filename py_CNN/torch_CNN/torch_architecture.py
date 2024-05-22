@@ -9,11 +9,9 @@ class Conv2d:
         # Assume the input, output and kernel are squares
         self.input_size = input_size # 28
         self.in_channels = in_channels # 3
-
+        self.kernel_size = kernel_size # 5
         self.output_size = self.input_size - self.kernel_size + 1 # 24
         self.out_channels = out_channels # 12
-
-        self.kernel_size = kernel_size # 5
         self.stride = 1
         self.batch_size = batch_size
         self.filters = []
@@ -24,7 +22,7 @@ class Conv2d:
                 self.kernel_size, self.kernel_size, in_channels
                 )))
         # Create the bias (1)
-        self.bias = torch.randn((self.output, self.output, 1))
+        self.bias = torch.randn((self.output_size, self.output_size, 1, 1)) if bias == True else None
         
 
     def __call__(self, x):
@@ -45,9 +43,13 @@ class Conv2d:
                         # Should be (5, 5, 3) eg.
                         correlation = self.filters[filter]
                         self.output[i, j, filter, example] = torch.sum(input_patch * correlation)
-        self.output += self.bias
+        if self.bias != None:
+            self.output += self.bias 
+        # (24, 24, 12, 32)
         return self.output
 
+    def parameters(self):
+        return [filter for filter in self.filters] + ([] if self.bias is None else [self.bias])
 
 
 class Linear:
@@ -67,6 +69,39 @@ class Linear:
 
 
 
+class Max_Pooling2d:
+    def __init__(self):
+        self.kernel_size = 2
+    
+    def __call__(self, x):
+        # (24, 24, 12, 32)
+        input_height, input_width, input_depth, batch_size = x.shape
+
+        # Calculate the output dimensions
+        output_height = input_height // 2 # 12
+        output_width = input_width // 2 # 12
+        output_depth = input_depth # 12, 32
+
+        # Initialize the output array and array to store indices
+        self.output = torch.zeros((output_height, output_width, output_depth, batch_size))
+
+        # Apply max pooling
+        for example in range(batch_size):
+            for h in range(output_height):
+                for w in range(output_width):
+                    for d in range(output_depth):
+                        # Extract the 2x2 region of interest from the input data
+                        region = x[h*2:(h+1)*2, w*2:(w+1)*2, d, example]
+                        # Compute the maximum value in the region
+                        max_val = torch.max(region)
+                        # Add to the output
+                        self.output[h, w, d, example] = max_val
+        return self.output
+        
+    def parameters(self):
+        return []
+
+
 class Tanh:
   def __call__(self, x):
     self.out = torch.tanh(x)
@@ -76,6 +111,19 @@ class Tanh:
     return []
   
 
+class FlattenConsecutive2d:
+    def __init__(self, batch_size):
+        self.batch_size = batch_size
+        
+    def __call__(self, x):
+        H, W, D, self.batch_size = x.shape
+        x = x.view(self.batch_size, H * W * D)
+        self.out = x
+        return self.out
+    
+    def parameters(self):
+        return []
+
 
 class Sequential:
     def __init__(self, layers):
@@ -83,6 +131,7 @@ class Sequential:
         
     def __call__(self, x):
         for layer in self.layers:
+            print(layer)
             x = layer(x)
         self.out = x
         return self.out
@@ -90,3 +139,6 @@ class Sequential:
     def parameters(self):
         # Get all parameters and put them in a list
         return [p for layer in self.layers for p in layer.parameters()]
+    
+
+    

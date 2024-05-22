@@ -1,24 +1,31 @@
 import torch
 import torch.nn.functional as F
 from dataset import Dataset
-from torch_architecture import Sequential, Linear, Tanh
+from torch_architecture import *
 import os
 
 # Parameters
-epochs = 5
-batch_size = 64
-num_input = 784
-num_hidden = 15
+batch_size = 32
 num_output = 10
-max_iterations = 5000
+input_size = 28
+input_depth = 1
+output_size = 24
+filter_size = 3
+kernel_size = 5
+max_iterations = 1
+hidden_size = int(filter_size * output_size * output_size / 4)
 lr = 0.1
+
+# (28, 28, 1, 32) -> (24, 24, 12, 32) -> (12, 12 12, 32) -> (32, 1728) -> (32, 10)
 
 # Define the model using our classes
 Model = Sequential([
-    Linear(num_input, num_hidden, bias=True), Tanh(),
-    Linear(num_hidden, num_hidden, bias=True), Tanh(),
-    Linear(num_hidden, num_output, bias=True),
-])
+    Conv2d(input_size, input_depth, filter_size, kernel_size, batch_size, bias = True), 
+    Tanh(), 
+    Max_Pooling2d(),
+    FlattenConsecutive2d(batch_size), 
+    Linear(hidden_size, num_output, bias = True)
+    ])
 
 # Turn on requires_grad to use loss.backward()
 parameters = Model.parameters()
@@ -33,8 +40,9 @@ Data.process_data()
 # Training loop
 for epoch in range(max_iterations):
     # Get a random batch
-    batch = torch.randint(0, Data.X_train.shape[1], (batch_size,))
-    Xb, Yb = Data.X_train[batch], Data.Y_train[batch]
+    batch = torch.randint(0, Data.X_train.shape[2], (batch_size,))
+    Xb, Yb = Data.X_train[:,:, batch], Data.Y_train[batch]
+    Xb = Xb.view(input_size,input_size, 1, batch_size)
 
     # Need to do this because torch only accepts integer one hots
     Yb = Yb.to(torch.int64)
@@ -57,8 +65,7 @@ for epoch in range(max_iterations):
         p.data += -lr * p.grad
 
     # Print the loss
-    if epoch % 1000 == 0: # print every once in a while
-        print(f'{epoch:7d}/{max_iterations:7d}: {loss.item():.4f}')
+    print(f'{epoch:7d}/{max_iterations:7d}: {loss.item():.4f}')
 
 
 directory = os.getcwd() + "model"
