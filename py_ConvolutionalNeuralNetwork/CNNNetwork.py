@@ -219,6 +219,7 @@ class ConvolutionalNN:
             # Shuffle both X_train and Y_train using the same permutation of indices
             X_train_shuffled = X_train[:, :, permuted_indices]
             Y_train_shuffled = Y_train[permuted_indices]
+            
             for batch_start in range(0, int(X_train_shuffled.shape[2]/100), batch_size):
                 batch_end = min(batch_start + batch_size, num_examples)
                 batch_gradients = [0, 0, 0, 0, 0, 0, 0, 0]  # Accumulate gradients over the batch
@@ -254,17 +255,18 @@ class ConvolutionalNN:
             counter = 0
             for j in range(int(X_train_shuffled.shape[2]/100)):
                 test_input = X_train_shuffled[:, :, j]
-                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, dropout_rate
                 )
                 prediction = self.get_prediction(final_output)
                 predicted_label = prediction[0]
                 if Y_train_shuffled[j] == predicted_label:
                     counter += 1
             print("Training Accuracy:", counter / int(X_train_shuffled.shape[2]/100))
+
             counter = 0
             for j in range(500):
                 test_input = X_dev[:, :, j]
-                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(layer_input, dropout_rate
+                layer_output, layer_pool, layer_indices, final_output, bn_cache_conv, bn_cache_fc, dropout_mask = self.forward_propagation(test_input, dropout_rate
                 )
                 prediction = self.get_prediction(final_output)
                 predicted_label = prediction[0]

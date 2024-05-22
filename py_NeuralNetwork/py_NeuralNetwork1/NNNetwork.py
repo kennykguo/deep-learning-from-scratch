@@ -25,6 +25,7 @@ class Network:
         self.db2 = np.random.rand(10, 1)
         self.db2 *= 0
         self.accuracies = []
+        np.random.seed(seed=42)
     
     def ReLU(self, Z): # Takes in a scalar, returns a scalar
         return np.maximum(Z, 0)

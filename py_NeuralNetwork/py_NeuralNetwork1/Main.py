@@ -1,4 +1,4 @@
-from Network import Network
+from NNNetwork import Network
 from Dataset import Dataset
 import torch
 import numpy as np
