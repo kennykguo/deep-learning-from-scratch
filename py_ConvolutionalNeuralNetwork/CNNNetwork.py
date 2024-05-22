@@ -2,6 +2,7 @@ import numpy as np
 from scipy import signal
 import math
 import matplotlib.pyplot as plt
+np.random.seed(42)
 
 class ConvolutionalNN:
     def __init__(self):

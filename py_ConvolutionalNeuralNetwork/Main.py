@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from CNNNetwork import ConvolutionalNN
 from Dataset import Dataset
 
-# np.random.seed(42)
+np.random.seed(42)
 
 # Interface
 Data = Dataset('data/train.csv')
