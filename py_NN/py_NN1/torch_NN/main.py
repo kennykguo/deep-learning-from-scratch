@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 from dataset import Dataset
 from torch_NN import Sequential, Linear, Tanh
-
+import os
 
 # Parameter dimensions
 epochs = 1
@@ -10,7 +10,7 @@ batch_size = 32
 num_input = 784
 num_hidden = 15
 num_output = 10
-max_iterations = 20000
+max_iterations = 5000
 lr = 0.1
 
 # Define the model using our classes
@@ -25,14 +25,15 @@ parameters = Model.parameters()
 for p in parameters:
   p.requires_grad = True
 
+# Process our data
 Data = Dataset('data/train.csv')
+
 Data.process_data()
 
-batch = torch.randint(0, Data.X_train.shape[1], (batch_size,)) #(784, 40000)
-
+# Training loop
 for epoch in range(max_iterations):
     # Get a random batch
-    batch = torch.randint(0, Data.X_train.shape[1], (batch_size,)) #(784, 40000)
+    batch = torch.randint(0, Data.X_train.shape[1], (batch_size,))
     Xb, Yb = Data.X_train[batch], Data.Y_train[batch]
 
     # Need to do this because torch only accepts integer one hots
@@ -56,5 +57,10 @@ for epoch in range(max_iterations):
         p.data += -lr * p.grad
 
     # Print the loss
-    if epoch % 500 == 0: # print every once in a while
+    if epoch % 1000 == 0: # print every once in a while
         print(f'{epoch:7d}/{max_iterations:7d}: {loss.item():.4f}')
+
+
+directory = os.getcwd() + "model"
+
+torch.save(Model.parameters(), directory)

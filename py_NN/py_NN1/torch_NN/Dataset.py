@@ -15,11 +15,13 @@ class Dataset:
         self.data = np.array(self.data)
         m, n = self.data.shape
         np.random.shuffle(self.data)
+        
         # Testing data
         data_dev = self.data[0:1000].T #Take the first 1000 rows, and transpose the matrix to get 1000 examples as column vectors
         self.Y_dev = data_dev[0].T
         self.X_dev = data_dev[1:].T #Takes all of the data corresponding to all of the entries (the X values)
         self.X_dev = self.X_dev / 255.
+        
         # Training data
         data_train = self.data[1000:m].T
         self.Y_train = data_train[0].T
