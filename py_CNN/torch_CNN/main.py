@@ -70,4 +70,4 @@ for epoch in range(max_iterations):
 
 directory = os.getcwd() + "model"
 
-torch.save(Model.parameters(), directory)
+torch.save(Model.parameters(), 'model.pth')

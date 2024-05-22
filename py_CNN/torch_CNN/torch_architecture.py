@@ -15,7 +15,6 @@ class Conv2d:
         self.stride = 1
         self.batch_size = batch_size
         self.filters = []
-
         # Create a total of out_channel filters (12)
         for _ in range(out_channels):
             self.filters.append(torch.randn((
@@ -24,7 +23,6 @@ class Conv2d:
         # Create the bias (1)
         self.bias = torch.randn((self.output_size, self.output_size, 1, 1)) if bias == True else None
         
-
     def __call__(self, x):
         # Input size eg.
         # (28, 28, 3, 32)
@@ -50,6 +48,7 @@ class Conv2d:
 
     def parameters(self):
         return [filter for filter in self.filters] + ([] if self.bias is None else [self.bias])
+
 
 
 class Linear:
