@@ -1,11 +1,11 @@
 # Minimal character-based language model learning with an LSTM architecture.
 #
 # Overall code structure based on Andrej Karpathy's min-char-rnn model:
-#    https://gist.github.com/karpathy/d4dee566867f8291f086
+# https://gist.github.com/karpathy/d4dee566867f8291f086
 #
 # But the architecture is modified to be LSTM rather than vanilla RNN.
 # The companion blog post is:
-#   https://eli.thegreenplace.net/2018/minimal-character-based-lstm-implementation/
+# https://eli.thegreenplace.net/2018/minimal-character-based-lstm-implementation/
 #
 # Tested with Python 3.6
 #
@@ -22,6 +22,7 @@ if len(sys.argv) > 1:
     filename = sys.argv[1]
 else:
     filename = 'input.txt'
+
 
 with open(filename, 'r') as f:
     data = f.read()
