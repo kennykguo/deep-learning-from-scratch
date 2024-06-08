@@ -3,20 +3,20 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 # Hyperparameters
-batch_size = 64 # how many independent sequences will we process in parallel?
-block_size = 256 # what is the maximum context length for predictions?
-max_iters = 5000
-eval_interval = 500
+batch_size = 4 # How many independent sequences will we process in parallel?
+block_size = 256 # What is the maximum context length for predictions?
+max_iters = 2000 # Total number of steps
+eval_interval = 100
 learning_rate = 1e-3
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 eval_iters = 200
-n_embd = 384
+n_embd = 216
 n_head = 6
 n_layer = 2
 dropout = 0.2
-# ------------
 
-torch.manual_seed(1337)
+
+# torch.manual_seed(1337)
 
 # Open the text
 with open('input.txt', 'r', encoding='utf-8') as f:
@@ -25,23 +25,30 @@ with open('input.txt', 'r', encoding='utf-8') as f:
 # Set parameters
 chars = sorted(list(set(text)))
 vocab_size = len(chars)
-# create a mapping from characters to integers
+# Create a mapping from characters to integers
 stoi = { ch:i for i,ch in enumerate(chars) }
 itos = { i:ch for i,ch in enumerate(chars) }
 encode = lambda s: [stoi[c] for c in s] # encoder: take a string, output a list of integers
 decode = lambda l: ''.join([itos[i] for i in l]) # decoder: take a list of integers, output a string
 
 # Train and test splits
+# Encode the data into numbers
 data = torch.tensor(encode(text), dtype=torch.long)
-n = int(0.9*len(data)) # first 90% will be train, rest val
+n = int(0.9 * len(data)) # first 90% will be train, rest val
 train_data = data[:n]
 val_data = data[n:]
 
 # Data loading
 def get_batch(split):
-    # generate a small batch of data of inputs x and targets y
+    # Generate a small batch of data of inputs x and targets y
     data = train_data if split == 'train' else val_data
+    # Generate list of indexes to pluck out from
     ix = torch.randint(len(data) - block_size, (batch_size,))
+    # Important to understand that the Transformer takes in no previous hidden state
+    # This means that the Transformer just gets portions of the text and learns from that, of time_steps length long
+    # time_steps is also the block_size
+    # e may be
+    # the ears
     x = torch.stack([data[i:i+block_size] for i in ix])
     y = torch.stack([data[i+1:i+block_size+1] for i in ix])
     x, y = x.to(device), y.to(device)
@@ -51,17 +58,22 @@ def get_batch(split):
 # Estimate loss averages loss over all iterations
 def estimate_loss():
     out = {}
+    # Put the model on evaluate mode
     model.eval()
+    # Loop over bot hsplits
     for split in ['train', 'val']:
+        # Loop over # of iterations to evaluate on
         losses = torch.zeros(eval_iters)
         for k in range(eval_iters):
             X, Y = get_batch(split)
             logits, loss = model(X, Y)
             losses[k] = loss.item()
+        # Calculate and save the respective losses
         out[split] = losses.mean()
     model.train()
     return out
 
+### ------------------------------------------------------------------------------------------------------
 
 class Head(nn.Module):
     def __init__(self, head_size):
@@ -70,7 +82,6 @@ class Head(nn.Module):
         self.query = nn.Linear(n_embd, head_size, bias = False)
         self.value = nn.Linear(n_embd, head_size, bias = False)
         self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
-
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
@@ -96,7 +107,7 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, x):
         out = torch.cat([h(x) for h in self.heads], dim = -1)
-        out = self.dropout(out)
+        out = self.dropout(self.proj(out))
         return out
 
 # Self-attention is the communication - per token level
@@ -120,8 +131,8 @@ class Block(nn.Module):
         super().__init__()
         head_size = n_embd // n_head # ???
         self.sa = MultiHeadAttention(n_head, head_size)
-        self.ffwd = FeedForward(n_embd)
         self.ln1 = nn.LayerNorm(n_embd)
+        self.ffwd = FeedForward(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
 
     def forward(self, x):
@@ -129,8 +140,7 @@ class Block(nn.Module):
         x = x + self.ffwd(self.ln2(x))
         return x
 
-class BigramLanguageModel(nn.Module):
-
+class Transformer(nn.Module):
     def __init__(self):
         super().__init__()
         # each token directly reads off the logits for the next token from a lookup table
@@ -151,6 +161,7 @@ class BigramLanguageModel(nn.Module):
         # x = self.sa_heads(x) # (B,T,C)
         # x = self.ffwd(x)
         x = self.blocks(x)
+        x = self.ln_f(x)
         logits = self.lm_head(x) # (B, T, vocab_size)
 
         if targets is None:
@@ -181,7 +192,8 @@ class BigramLanguageModel(nn.Module):
         return idx
 
 
-model = BigramLanguageModel()
+### Main code
+model = Transformer()
 m = model.to(device)
 
 # create a PyTorch optimizer
