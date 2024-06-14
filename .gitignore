@@ -1,5 +1,7 @@
 /archive
 /.jupyter
+/.ipynb_checkpoints
+/.vscode
 /data
 venv.md
-/code_snippets/bbox/CUB_200_2011
+/model
