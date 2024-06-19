@@ -1,0 +1,89 @@
+Layer (type)                  Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)          (None, 160, 160, 3)       0         
+_________________________________________________________________
+conv2d_1 (Conv2D)             (None, 160, 160, 32)      896       
+_________________________________________________________________
+batch_normalization_1 (BatchNormalization) (None, 160, 160, 32)    128       
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2D) (None, 80, 80, 32)       0         
+_________________________________________________________________
+dropout_1 (Dropout)           (None, 80, 80, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)             (None, 80, 80, 64)       18496     
+_________________________________________________________________
+batch_normalization_2 (BatchNormalization) (None, 80, 80, 64)      256       
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2D) (None, 40, 40, 64)       0         
+_________________________________________________________________
+dropout_2 (Dropout)           (None, 40, 40, 64)        0         
+_________________________________________________________________
+conv2d_3 (Conv2D)             (None, 40, 40, 128)      73856     
+_________________________________________________________________
+batch_normalization_3 (BatchNormalization) (None, 40, 40, 128)     512       
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2D) (None, 20, 20, 128)      0         
+_________________________________________________________________
+dropout_3 (Dropout)           (None, 20, 20, 128)       0         
+_________________________________________________________________
+flatten_1 (Flatten)           (None, 51200)             0         
+_________________________________________________________________
+dense_1 (Dense)               (None, 256)               13107456  
+_________________________________________________________________
+batch_normalization_4 (BatchNormalization) (None, 256)            1024       
+_________________________________________________________________
+dropout_4 (Dropout)           (None, 256)               0         
+_________________________________________________________________
+dense_2 (Dense)               (None, 10)                2570      
+=================================================================
+Total params: 13,205,194
+Trainable params: 13,204,298
+Non-trainable params: 896
+
+### ----------------------------------------------------------------------------------------
+
+
+Architecture for Input Size (160, 160, 3)
+Input Layer
+
+Input shape: (160, 160, 3)
+First Convolutional Layer
+
+Convolution: 32 filters, kernel size (3, 3), stride (1, 1), padding 'same'
+Activation: ReLU
+Batch Normalization
+Pooling: Max pooling with pool size (2, 2), stride (2, 2)
+Dropout: 0.25
+Output shape: (80, 80, 32)
+Second Convolutional Layer
+
+Convolution: 64 filters, kernel size (3, 3), stride (1, 1), padding 'same'
+Activation: ReLU
+Batch Normalization
+Pooling: Max pooling with pool size (2, 2), stride (2, 2)
+Dropout: 0.25
+Output shape: (40, 40, 64)
+Third Convolutional Layer
+
+Convolution: 128 filters, kernel size (3, 3), stride (1, 1), padding 'same'
+Activation: ReLU
+Batch Normalization
+Pooling: Max pooling with pool size (2, 2), stride (2, 2)
+Dropout: 0.25
+Output shape: (20, 20, 128)
+Flatten Layer
+
+Flattens the output from the previous layer
+Output shape: (20 * 20 * 128) = (51200)
+Fully Connected (Dense) Layer
+
+Dense layer with 256 units
+Activation: ReLU
+Batch Normalization
+Dropout: 0.5
+Output shape: (256)
+Output Layer
+
+Dense layer with 10 units (for example, for 10 classes)
+Activation: Softmax
+Output shape: (10)
