@@ -1,25 +1,12 @@
 #include "Network.h"
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
-// Constructor
-Network::Network(const vector<int>& modelLayers) {
 
-    cout << "Created a Network!" << '\n';
+// The Network classes define the architecture, and you must choose the layers before you compile the program
 
-    // Gets the size of the modelLayers vector
-    this-> numLayers = modelLayers.size();
-
-    // Loop through each layer (excluding the last element of modelLayers)
-    for (int i = 0; i < numLayers - 1; i++) {
-        // Creates a linear layer for each pair of consecutive modelLayer values
-        // Constructs an element directly in the vector
-        networkLayers.emplace_back(*this, modelLayers[i], modelLayers[i + 1]);
-    }
-    // Adds a dummy layer at the end to handle the case where they might be no more layers to process
-    networkLayers.emplace_back(*this, 0, 0);
-}
 
 // ReLU activation function
 void Network::ReLU(vector<vector<Neuron>>& matrix) {
@@ -38,6 +25,8 @@ void Network::ReLU(vector<vector<Neuron>>& matrix) {
     }
 }
 
+
+
 // Derivative of ReLU activation function
 void Network::der_ReLU(vector<vector<Neuron>>& matrix) {
     for (vector<Neuron>& row : matrix) {
@@ -51,23 +40,46 @@ void Network::der_ReLU(vector<vector<Neuron>>& matrix) {
     }
 }
 
+
+
 // Matrix multiplication function
 vector<vector<Neuron>> Network::matrixMultiply(
     const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne, 
     const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo) {
 
+    cout << "Matrix multiplication:\n";
+    cout << "MatrixOne Rows: " << rowsOne << "\n";
+    cout << "MatrixOne Columns: " << colsOne << "\n";
+    cout << "MatrixTwo Rows: " << rowsTwo << "\n";
+    cout << "MatrixTwo Columns: " << colsTwo << "\n";
+
+    assert(colsOne == rowsTwo && "Matrix dimensions must match for multiplication.");
+
+    // Initialize result matrix with the correct dimensions
     vector<vector<Neuron>> result(rowsOne, vector<Neuron>(colsTwo));
-    
-    // colsOne = rowsTwo
+    cout << "Initialized result matrix with dimensions: " << result.size() << " x " << (result.empty() ? 0 : result[0].size()) << "\n";
+
+    // Perform the matrix multiplication
     for (int i = 0; i < rowsOne; ++i) {
         for (int j = 0; j < colsTwo; ++j) {
-            int currentSum = 0;
-            // Number of entries to sum up for
+            double currentSum = 0.0;
             for (int k = 0; k < colsOne; ++k) {
                 currentSum += matrixOne[i][k].value * matrixTwo[k][j].value;
             }
             result[i][j].value = currentSum;
         }
+    }
+
+    // Debugging: print some values from the result to ensure the computation was performed
+    cout << "Sample values from the result matrix:\n";
+    if (!result.empty() && !result[0].empty()) {
+        cout << "result[0][0].value: " << result[0][0].value << "\n";
+        cout << "result[0][1].value: " << result[0][1].value << "\n";
+    }
+
+    cout << "Result Rows: " << result.size() << "\n";
+    if (!result.empty()) {
+        cout << "Result Columns: " << result[0].size() << "\n";
     }
     return result;
 }
