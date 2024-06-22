@@ -13,7 +13,7 @@
 ## About The Project
 This is a repository containing deep learning algorithms, with implementations using only PyTorch tensors/NumPy arrays in Python, PyTorch's gradient tracking, and C/C++. This resource contains efficient implementations of these algorithms from scratch, and as reusable modules.
 
-I created this repository for refining my own understanding of deep learning concepts, and also, for teaching purposes. 
+I created this repository to refine my own understanding of deep learning concepts, and also, for teaching purposes. 
 
 Some of the resources referenced in these implementations:
 
