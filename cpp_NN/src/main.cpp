@@ -13,11 +13,8 @@ using namespace std;
 const int INPUT_SIZE = 784; // Number of pixels in each image
 const int BATCH_SIZE = 16; // Batch size for processing
 
-// Function to read CSV file and return a tuple of labels and batches
-tuple< vector<vector<Neuron>>, vector<vector<vector<Neuron>>> > readCSV(const string& filename) {
-    
+tuple<vector<vector<Neuron>>, vector<vector<vector<Neuron>>>> readCSV(const string& filename) {
     ifstream file(filename);
-
     vector<vector<Neuron>> labels;
     vector<vector<vector<Neuron>>> batches;
 
@@ -33,27 +30,31 @@ tuple< vector<vector<Neuron>>, vector<vector<vector<Neuron>>> > readCSV(const st
     vector<vector<Neuron>> currentBatch;
 
     while (getline(file, line)) {
-        // Skips the first line
         if (firstLine) {
             firstLine = false;
             continue; // Skip header line
         }
 
-        // Initializes a string stream with the current line for parsing
         stringstream ss(line);
         string cell;
 
-        // One example and one label
         vector<Neuron> example;
         Neuron labelNeuron;
 
         // Read label
-        getline(ss, cell, ',');
+        if (!getline(ss, cell, ',')) {
+            cerr << "Error reading label from line: " << line << endl;
+            continue;
+        }
         labelNeuron.value = stod(cell);
         currentLabelBatch.push_back(labelNeuron);
 
         // Read pixels
-        for (int j = 0; j < INPUT_SIZE && getline(ss, cell, ','); ++j) {
+        for (int j = 0; j < INPUT_SIZE; ++j) {
+            if (!getline(ss, cell, ',')) {
+                cerr << "Error reading pixel " << j << " from line: " << line << endl;
+                break;
+            }
             Neuron pixelNeuron;
             pixelNeuron.value = stod(cell) / 255.0; // Normalize pixel value
             example.push_back(pixelNeuron);
@@ -70,11 +71,8 @@ tuple< vector<vector<Neuron>>, vector<vector<vector<Neuron>>> > readCSV(const st
         }
     }
 
-    // Remove the last batch if it's not full
-    if (currentBatch.size() != BATCH_SIZE) {
-        currentBatch.clear();
-        currentLabelBatch.clear();
-    } else {
+    // Add the last batch if it's not empty
+    if (!currentBatch.empty()) {
         batches.push_back(currentBatch);
         labels.push_back(currentLabelBatch);
     }
@@ -104,13 +102,11 @@ void printExample(const vector<Neuron>& label, const vector<vector<Neuron>>& exa
 
 
 int main() {
-
     cout << "Starting program:\n";
 
     // Define our data
     string filename = "train.csv";
-    tuple<vector<vector<Neuron>>, vector<vector<vector<Neuron>>>> result = readCSV(filename);
-    
+    auto result = readCSV(filename);
 
     // Define model layers manually
     Network network;
@@ -118,34 +114,29 @@ int main() {
     network.networkLayers.push_back(LinearLayer(network, 128, 64)); // (128, 64)
     network.networkLayers.push_back(LinearLayer(network, 64, 10)); // (64, 10)
 
-    // Example usage: print the first label and batch
     // Check if batch and labels are not empty
-    vector<vector<Neuron>> labels = get<0>(result);
-    vector<vector<vector<Neuron>>> batches = get<1>(result);
-    if (!labels.empty() && !batches.empty()) {
-        // Print the first label and batch for verification
-        // printExample(labels[0], batches[0]);
+    auto labels = get<0>(result);
+    auto batches = get<1>(result);
 
-        // Forward pass for the first batch
-        vector<vector<Neuron>> inputBatch = batches[0];
+    cout << "Labels size: " << labels.size() << "\n";
+    cout << "Batches size: " << batches.size() << "\n";
+
+    if (!labels.empty() && !batches.empty()) {
+        auto inputBatch = batches[0];
+
+        cout << "Input batch size: " << inputBatch.size() << "\n";
 
         // Forward through the first layer
-        vector<vector<Neuron>> layer1Output = network.networkLayers[0].forward(inputBatch);
+        auto layer1Output = network.networkLayers[0].forward(inputBatch);
+        cout << "Layer 1 output size: " << layer1Output.size() << "\n";
 
         // Forward through the second layer
-        vector<vector<Neuron>> layer2Output = network.networkLayers[1].forward(layer1Output);
+        auto layer2Output = network.networkLayers[1].forward(layer1Output);
+        cout << "Layer 2 output size: " << layer2Output.size() << "\n";
 
         // Forward through the third layer
-        vector<vector<Neuron>> finalOutput = network.networkLayers[2].forward(layer2Output);
-
-        // Print the output of the last layer (should be of shape [BATCH_SIZE, 10])
-        // cout << "Output:" << endl;
-        // for (const auto& row : finalOutput) {
-        //     for (const auto& neuron : row) {
-        //         cout << neuron.value << " ";
-        //     }
-        //     cout << endl;
-        // }
+        auto finalOutput = network.networkLayers[2].forward(layer2Output);
+        cout << "Final output size: " << finalOutput.size() << "\n";
     }
 
     cout << "Done" << endl;

@@ -5,24 +5,54 @@
 
 using namespace std;
 
-// Constructor
-// Use of : initiates member variables before the constructor body executes
-LinearLayer::LinearLayer(Network& network, int fan_in, int fan_out):network(network), fan_in(fan_in), fan_out(fan_out) {
+// // Constructor
+// // Use of : initiates member variables before the constructor body executes
+// LinearLayer::LinearLayer(Network& network, int fan_in, int fan_out):network(network), fan_in(fan_in), fan_out(fan_out) {
     
-    cout << "Created a LinearLayer" << endl;
+//     cout << "Created a LinearLayer" << endl;
 
+//     // Initialize weightsMatrix and biasMatrix
+//     // vector.resize() changes the size of the vector
+//     weightsMatrix.resize(fan_out, vector<Neuron>(fan_in));
+//     biasMatrix.resize(fan_out);
+
+//     // Initialize outputActivations with dummy values; it will be resized during forward pass
+//     outputActivations.resize(1, vector<Neuron>(fan_out)); // Dummy initialization
+
+//     cout << "Weights Matrix Shape:\n";
+//     cout << "Rows: " << fan_in << '\n';
+//     cout << "Columns: " << fan_out << '\n';
+// }
+
+
+// Ensure weightsMatrix and biasMatrix are properly initialized in LinearLayer constructor
+LinearLayer::LinearLayer(Network& network, int fan_in, int fan_out)
+    : network(network), fan_in(fan_in), fan_out(fan_out) {
+    
     // Initialize weightsMatrix and biasMatrix
-    // vector.resize() changes the size of the vector
     weightsMatrix.resize(fan_out, vector<Neuron>(fan_in));
     biasMatrix.resize(fan_out);
 
-    // Initialize outputActivations with dummy values; it will be resized during forward pass
-    outputActivations.resize(1, vector<Neuron>(fan_out)); // Dummy initialization
+    // Fill weightsMatrix and biasMatrix with random values or initial values
+    for (auto& row : weightsMatrix) {
+        for (auto& neuron : row) {
+            neuron.value = Neuron::randomValue();
+        }
+    }
+    for (auto& neuron : biasMatrix) {
+        neuron.value = Neuron::randomValue();
+    }
 
+    cout << "Created a LinearLayer" << endl;
     cout << "Weights Matrix Shape:\n";
     cout << "Rows: " << fan_in << '\n';
     cout << "Columns: " << fan_out << '\n';
 }
+
+
+
+
+
 
 // Forward propagation function
 vector<vector<Neuron>> LinearLayer::forward(const vector<vector<Neuron>>& inputMatrix) {
@@ -63,3 +93,4 @@ vector<vector<Neuron>> LinearLayer::forward(const vector<vector<Neuron>>& inputM
     // this->output_cols = fan_out;
     return output;
 }
+

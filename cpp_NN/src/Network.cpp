@@ -1,6 +1,7 @@
 #include "Network.h"
 #include <iostream>
 #include <cassert>
+#include <iostream>
 
 using namespace std;
 
@@ -42,44 +43,85 @@ void Network::der_ReLU(vector<vector<Neuron>>& matrix) {
 
 
 
-// Matrix multiplication function
 vector<vector<Neuron>> Network::matrixMultiply(
-    const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne, 
+    const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne,
     const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo) {
 
-    cout << "Matrix multiplication:\n";
-    cout << "MatrixOne Rows: " << rowsOne << "\n";
-    cout << "MatrixOne Columns: " << colsOne << "\n";
-    cout << "MatrixTwo Rows: " << rowsTwo << "\n";
-    cout << "MatrixTwo Columns: " << colsTwo << "\n";
-
+    // Ensure the dimensions are correct
     assert(colsOne == rowsTwo && "Matrix dimensions must match for multiplication.");
 
     // Initialize result matrix with the correct dimensions
     vector<vector<Neuron>> result(rowsOne, vector<Neuron>(colsTwo));
-    cout << "Initialized result matrix with dimensions: " << result.size() << " x " << (result.empty() ? 0 : result[0].size()) << "\n";
 
     // Perform the matrix multiplication
     for (int i = 0; i < rowsOne; ++i) {
         for (int j = 0; j < colsTwo; ++j) {
             double currentSum = 0.0;
-            for (int k = 0; k < colsOne; ++k) {
+            for (int k = 0; k < colsOne - 1; ++k) {
+                // Additional checks and logging
+                assert(i < matrixOne.size());
+                assert(k < matrixOne[i].size());
+                assert(k < matrixTwo.size());
+                assert(j < matrixTwo[k].size());
+
+                // Debugging information
+                if (!(i < matrixOne.size())) cerr << "i out of bounds: " << i << " >= " << matrixOne.size() << endl;
+                if (!(k < matrixOne[i].size())) cerr << "k out of bounds for matrixOne: " << k << " >= " << matrixOne[i].size() << endl;
+                if (!(k < matrixTwo.size())) cerr << "k out of bounds for matrixTwo: " << k << " >= " << matrixTwo.size() << endl;
+                if (!(j < matrixTwo[k].size())) cerr << "j out of bounds for matrixTwo: " << j << " >= " << matrixTwo[k].size() << endl;
+
                 currentSum += matrixOne[i][k].value * matrixTwo[k][j].value;
             }
             result[i][j].value = currentSum;
         }
     }
 
-    // Debugging: print some values from the result to ensure the computation was performed
-    cout << "Sample values from the result matrix:\n";
-    if (!result.empty() && !result[0].empty()) {
-        cout << "result[0][0].value: " << result[0][0].value << "\n";
-        cout << "result[0][1].value: " << result[0][1].value << "\n";
-    }
-
-    cout << "Result Rows: " << result.size() << "\n";
-    if (!result.empty()) {
-        cout << "Result Columns: " << result[0].size() << "\n";
-    }
     return result;
 }
+
+
+
+// // Matrix multiplication function
+// vector<vector<Neuron>> Network::matrixMultiply(
+//     const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne, 
+//     const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo) {
+
+//     cout << "Matrix multiplication:\n";
+//     cout << "MatrixOne Rows: " << rowsOne << "\n";
+//     cout << "MatrixOne Columns: " << colsOne << "\n";
+//     cout << "MatrixTwo Rows: " << rowsTwo << "\n";
+//     cout << "MatrixTwo Columns: " << colsTwo << "\n";
+
+//     assert(colsOne == rowsTwo && "Matrix dimensions must match for multiplication.");
+
+//     // Initialize result matrix with the correct dimensions
+//     vector<vector<Neuron>> result(rowsOne, vector<Neuron>(colsTwo));
+//     cout << "Initialized result matrix with dimensions: " << result.size() << " x " << (result.empty() ? 0 : result[0].size()) << "\n";
+
+//     // Perform the matrix multiplication
+//     for (int i = 0; i < rowsOne; ++i) {
+//         for (int j = 0; j < colsTwo; ++j) {
+//             double currentSum = 0.0;
+//             for (int k = 0; k < colsOne; ++k) {
+//                 currentSum += matrixOne[i][k].value * matrixTwo[k][j].value;
+//             }
+//             result[i][j].value = currentSum;
+//         }
+//     }
+
+//     // Debugging: print some values from the result to ensure the computation was performed
+//     cout << "Sample values from the result matrix:\n";
+//     if (!result.empty() && !result[0].empty()) {
+//         cout << "result[0][0].value: " << result[0][0].value << "\n";
+//         cout << "result[0][1].value: " << result[0][1].value << "\n";
+//     }
+
+//     cout << "Result Rows: " << result.size() << "\n";
+//     if (!result.empty()) {
+//         cout << "Result Columns: " << result[0].size() << "\n";
+//     }
+//     return result;
+// }
+
+
+

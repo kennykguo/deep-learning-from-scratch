@@ -2,8 +2,10 @@
 #include <cstdlib> // Include for rand()
 
 Neuron::Neuron() {
-    // Initialize a random value when the object is instantiated
     value = randomValue();
-    // Initialize the gradient to zero for now
     gradient = 0;
+}
+
+double Neuron::randomValue() {
+    return rand() / double(RAND_MAX); // Generate a random value between 0 and 1
 }
