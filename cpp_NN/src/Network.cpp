@@ -65,6 +65,8 @@ vector<vector<Neuron>> Network::matrixMultiply(
                 assert(j < matrixTwo[k].size());
 
                 // Debugging information
+                // K is out of bounds!
+                // Check GPT for kgkgg
                 if (!(i < matrixOne.size())) cerr << "i out of bounds: " << i << " >= " << matrixOne.size() << endl;
                 if (!(k < matrixOne[i].size())) cerr << "k out of bounds for matrixOne: " << k << " >= " << matrixOne[i].size() << endl;
                 if (!(k < matrixTwo.size())) cerr << "k out of bounds for matrixTwo: " << k << " >= " << matrixTwo.size() << endl;
