@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import torch
 import torch.nn.functional as F
 from dataset import Dataset
@@ -144,5 +143,4 @@ for epoch in range(max_iterations):
 
 directory = os.getcwd() + "model"
 
->>>>>>> old-repo/main
 torch.save(Model.parameters(), 'model.pth')

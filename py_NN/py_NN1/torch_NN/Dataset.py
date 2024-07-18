@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -80,5 +79,4 @@ class Dataset:
         image = image_array.reshape(28, 28)
         plt.imshow(image, cmap='gray')
         plt.axis('off')  # Turn off axis
->>>>>>> old-repo/main
         plt.show()

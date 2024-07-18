@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import torch
 
 class Linear:
@@ -74,5 +73,4 @@ class Sequential:
 
     def parameters(self):
         # Get all parameters and put them in a list
->>>>>>> old-repo/main
         return [p for layer in self.layers for p in layer.parameters()]

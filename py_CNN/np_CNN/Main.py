@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import numpy as np
 import scipy as signal
 import math
@@ -52,5 +51,4 @@ Model.stochastic_gradient_descent(Data.X_train, Data.X_dev, Data.Y_train, Data.Y
 
 # np.savez("model_parameters.npz", Model.dW1, Model.b1, dW2=Model.W2, db2=Model.db2)
 
->>>>>>> old-repo/main
 # Model.plot_accuracies()

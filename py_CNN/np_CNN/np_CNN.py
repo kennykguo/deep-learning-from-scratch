@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import numpy as np
 from scipy import signal
 import math
@@ -606,5 +605,4 @@ class ConvolutionalNN:
         plt.title('Model Accuracy over Epochs')
         plt.legend()
         plt.grid(True)
->>>>>>> old-repo/main
         plt.show()

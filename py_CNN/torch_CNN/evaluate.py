@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import torch
 import torch.nn.functional as F
 from dataset import Dataset
@@ -154,5 +153,4 @@ for i in range(iterations):
 
 # Print the accuracy
 print("Accuracy: ")
->>>>>>> old-repo/main
 print((counter / iterations) * 100 , "%")

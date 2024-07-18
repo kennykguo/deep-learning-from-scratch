@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import torch
 import scipy as signal
 
@@ -284,5 +283,4 @@ class Sequential:
         return [p for layer in self.layers for p in layer.parameters()]
     
 
->>>>>>> old-repo/main
     
