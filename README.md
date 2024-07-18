@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <h1 align="center">Deep Learning From Scratch</h1>
 
 
@@ -23,7 +22,6 @@ Some of the resources referenced in these implementations:
 2. http://neuralnetworksanddeeplearning.com/
 
 3. https://arxiv.org/pdf/1802.01528
-=======
 <h1 align="center">Deep Learning From Scratch</h1>
 
 
@@ -46,4 +44,3 @@ Some of the resources referenced in these implementations:
 2. http://neuralnetworksanddeeplearning.com/
 
 3. https://arxiv.org/pdf/1802.01528
->>>>>>> old-repo/main
