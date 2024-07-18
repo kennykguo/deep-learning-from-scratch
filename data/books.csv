@@ -1,0 +1,933 @@
+  Pragmatic Thinking and Learning
+
+    Introduction
+
+  Software is imagined and created in our heads
+  You don’t get taught, you have to learn
+  Pragmatism is to do what works for you
+  Wetware   human brain cells analogous to computer systems
+  Speaking, thinking, writing and typing are different tasks and use different portions of the brain
+  Always consider the context
+
+    Journey from novice to expert
+
+  Dreyfus model of skill acquisition: Five discrete stages through which one must pass on the journey from novice to expert
+  Construct theory
+  Event theories can be measured   verified and proven
+  Construct theories are abstractions and only evaluated in terms of usefulness
+  eg. the mind is an abstraction
+  Its often difficult for experts to explain their actions at a fine level of detail
+  It is hard to articulate expertise
+  Novices need clear and context free rules to operate, which would render the expert ineffective
+  As you move from novice to expert, your mental models, perception, and problem solving change
+  Stage 1: Novices
+      Specifically performing a skill results in change of thinking
+      Novices are very concerned about success, have little experience to guide them, have uncertainty, don’t want to particularly learn, just want to accomplish a goal, do not know how to respond to mistakes, and are vulnerable to confusion
+      They can be effective when given context free rules   When X happens, do Y.
+      Novices are flummoxed with deciding which rules are relevant
+      With context free rules, you can never specify everything fully (infinite regression)
+      Rules should get you started
+  Stage 2: Advanced beginners
+      Start to break away from fixed rules, and task on their own but have difficulty troubleshooting
+      They want information quick
+      Can start using advice in the correct context based on similar situations but barely
+      There is no big picture or unity
+  Stage 3: Competent
+      You can develop conceptual models and work with them
+      You can troubleshoot problems and figure out how to solve novel problems you haven’t faced before
+      Seek out advice and apply advice from experts to use effectively
+      The competent seeks out to solve problems
+  Stage 4: Proficient
+      You need the big picture
+      They want to understand the larger conceptual framework and don’t want anything oversimplified
+      Proficient practitioners can correct previous poor task performance, reflect on how they have done, revise their approach, and perform better. This is not available before this stage
+      You learn from other’s experiences
+      You can apply maxims   proverbial and fundamental truths that can be applied to a situation at hand
+      eg. “test everything that can possibly break”
+      The proficient practitioner has the experience to apply judgment and figure out what maxims to apply, and what it means, *in context.*
+      They know what happens next, and what needs to change, if anything.
+      Proficient practitioners take advantage of agile methods
+  Stage 5: Expert
+      They are the primary sources of information in a field, and they continually look for better ways to do things
+      Experts work by intuition, not by reason
+      The expert knows the difference between irrelevant details and import details
+  When you are not skilled, you are more likely to think you are an expert
+  Second order incompetence   being unskilled and unaware of it
+  Ignorance more frequency begets confidence than does knowledge
+  When you become an expert, you become aware how little you know
+  Rules ruin experts
+  Race sheep, herd race horses
+  Novices need to be given direction and herded. Agile development doesn’t work well on a team composed of solely novices/advanced beginners
+  Practices can never be formalized, they must always be worked out in real time
+  The three most important changes along the way include:
+      Moving away from rules to intuition
+      Change in perception   problems are no longer a collection of equally relevant bits, but rather one where only certain bits are relevant
+      Change from being a detached observer to an involved part of the system itself
+  Most people for most skills never get higher than advanced beginner
+  Increase in skill increases metacognitive ability
+  The recognizes patterns in context
+  It takes a minimum of a decade to become an expert
+  Effort is not enough, you need deliberate practice
+      Well defined task
+      Task is challenging enough, but doable
+      Environment needs to supply informative feedback
+      Provides opportunity for repetition and correction of errors
+  Accept responsibility: Programmers often implement something they know is wrong, ignoring the warning signs. Feedback is necessary
+  Accept the responsibility to NOT follow the rules if necessary
+  No expertise without experience, and no substitute for experience. Experience can be more efficient and effective
+  Imitate existing practice, slowly assimilate the tacit knowledge and experience over time, and then go beyond imitation and innovate
+  Winners don’t carry losers   what value do you bring?
+  The model is a tool, not a mirror
+  Rules cannot tell you the most relevant activities to perform or the correct path, they are only to help you get started
+  A model is not reality
+  Problem solving can’t be formalized
+  Formal models hinder creativity
+  Experts are alienated
+  Spelling too much detail
+  Oversimplification of complex situations
+  Typical usually never happens
+  Reliance on rules should decrease as ability to judge increases
+  Object Oriented Design is based on context that form relationships
+  Novices need a problem space
+  Learning to learn is subject to the Dreyfus model
+  Memory → CPU  1 →CPU  2
+  Linear processing style, and rich mode
+  Rich mode is critical for intuition
+  L mode contributes to actual input
+  R mode is asynchronous
+  Thoughts occur before words
+  If you keep track of ideas, you’ll get more of them
+  L mode is verbal, analytic and rational
+  Many valid thought processes are not rational
+  R mode is non verbal, non rational and holistic
+  Synthetic learning   prototyping, and independent test units. Learn by building
+  Competing on commoditization
+  Attractive things work better
+  Being happy broadens your thought process and brings more of the brain hardware online
+  Artificial environments create artificial data
+  Art comes not from creation, but the selection of infinite choices
+  Pattern and intuition is key to becoming an expert
+  Believe in plasticity of the brain to increase your ability
+  Think your brain has more capacity for learning
+
+    Get in your right mind
+
+  To become more creative, activate more neural pathways
+  Use tactile enhancement
+  Cross sensory feedback   verbal, written, visual
+  Change your environment
+  Slightly altered state of consciousness that allows you to see well
+  Give L mode a job it does not want
+  R mode to L mode flow for learning
+  Let R mode lead, then switch to L mode to “productize it”
+  Creativity is limited when you memorize minor facts and not grasp the whole
+  Create a shitty first draft
+  Creativity is combining incompatible ideas
+  Any software system should be guided by a metaphor
+  For each image that crosses your mind, look at the image, try to see all details
+  Describe it out loud, imagine the image with all five senses, and use present tense
+  Morning pages   first thing in the morning, 3 pages long hand, do not censor anything and do not skip a day
+  Unguarded brain dump
+  Rather than preventing a bug, try to thing of ways to cause the bug
+  Assuming one right answer, thinking a solution is not logical, all are mental locks
+
+    Debug your mind
+
+  We make decisions and solve problems based on faulty memory and emotional state
+  Cognitive biases
+      Anchoring   seeing an umber affects how you predict or decide a quantity
+      Fundamental attribution error   ascribing other people’s behaviour to their personality   context dependent
+      Self serving bias   protective bias and lack of taking responsibility for failure
+      Need for closure   avoiding uncertainty
+      Confirmation bias
+      Exposure effect   prefer tools that are familiar even if they don’t work well
+      Hawthorne effect   behaving differently when watched
+      False memory   imagined events with real memory   every read is a write
+      Symbolic reduction fallacy   avoid complexity
+      Nominal fallacy   naming to reduce its complexity
+  Platonic fold   idealized simplified forms leaves gaps
+  Deferring decisions to the future, when you are more wise and knowledgable
+  Humans are bad at trying to extrapolate future events from previous events   we assume that events form a more or less stable, linear progression with easily defined cause and effect
+  Correlation is not causation
+  Determining causation is a different beast than observing correlation
+  General affinity
+  Personality tendencies
+  Hardware bugs
+  Lead with intuition, follow with linear feedback
+
+Learn deliberately
+
+  Education is something drawn out of the learner
+  Random approach leads to random results
+  The mind is not a vessel to be filled but a fire to be kindled
+  Knowledge is not important   mental models, questions you asked, and your experiences are more relevant to your performance
+  You need feedback to understand your progress
+  A goal lis a desired state
+  An objective is a something you do to get closer to a goal
+  SMART   specific, measurable, attainable, relevant, time boxed
+  Treat your learning portfolio like an investment portfolio
+      Have a plan, diversify, make an active not passive investment, and make a regular investment
+  All knowledge investments have value
+  Iterate your plan
+  SQ3R   Survey, Question, Read, Recite, Review
+  Test driven learning
+
+Gain experience
+
+Manage focus
+
+Beyond expertise
+
+
+  Introduction
+
+  Impressions are unconscious
+  On the other hand, we have powerful intuitive abilities
+  The situation provides a cue, the cue gives the expert access to information stored in memory, the information provides the answer   intuition is nothing less than recognition.
+  Emotions  loom much larger in understanding of intuitive judgments
+  When faced with a difficult question, we often answer the easier one one without noticing the substitution
+  Fast thinking involves variants f intuitive thought, while slow thinking involves deliberate effortful thinking
+  This book is about System 1, and its mutual relationship to System 2
+  Our shortcomings come from confidence in believing what we know, and the ignorance of what we don’t
+  Overconfidence is fed by the illusion of hindsight
+
+  1.
+
+System 1 affects the choices that System 2 makes
+
+Seeing and orienting are functions of S1
+
+We can be blind to the obvious and blind to our blindness
+
+System 2 endorsed, and often takes the last word when the surroundings violate S1 judgment
+
+S1 cannot be turned off
+
+Conflict between an automatic reaction and intention to control it is common
+
+S2 is in charge of self control
+
+The optimal way to approach judgment is to recognize situations that have a more likely chance of error, and avoid them when the stakes are high. 
+
+Anything that occupies space in your working memory reduces your ability to think
+
+  2.
+
+S2 is a lazy character
+
+Dilation of the pupil is a good indicator for mental focus
+
+We don’t have control of the effort of doing tasks   harder tasks require more fixed effort, easier tasks will require less effort
+
+Analogy for a circuit and just enough electricity to do a task   S2 has “spare capacity”
+
+Law of least effort applies to cognitive and physical assertion
+
+Effort is a cost and laziness is our nature
+
+Effort is required to maintain simultaneously in memory several ideas that require several actions
+
+S2 can follow rules, compare objects, and choose
+
+Rapid switching leads to more effort
+
+Time pressure is also another driver of effort, the most effortful require you to think fast
+
+Often, we commit our results to long term rather than overworking our working memory. 
+
+  3.
+
+S2 has a natural “stroll” like behaviour, and self control aswell as thought often draw on the same limited effort
+
+Flow separates the two forms of effort being concentration on a task and the deliberate control of attention, you don’t need to do the latter, meaning you can dedicate more resources to the first
+
+S1 has a greater influence on action, when S2 is busy
+
+Self control requires attention and effort
+
+S2 manages thoughts and behaviours
+
+Ego depletion   the depletion of the pool of mental resilience
+
+Exertion of self control is painful
+
+A high demand on S2 requires self control
+
+Ego depletion also counts as a loss of motivation
+
+Ego depletion differs from a high cognitive load
+
+The brain consumes more glucose during demanding tasks and when S2 is used, your blood sugar level drops
+
+The effects of ego depletion can be undone by ingesting glucose
+
+Restoring the level of available sugar in the brain prevents deterioration of performance
+
+Fatigue and hunger are factors in making difficult decisions   often the brain will just choose an easier one
+
+Many people are overconfident in believing their intuition is correct
+
+When people believe in something, they will look for arguments to support it. S1 creates the conclusion first, then the argument
+
+Memory is a function of S1
+
+Deliberate search and check is a function of S2
+
+High self control is linked to high intelligence
+
+The ability to control attention and emotion is linked
+
+The characters of judgment have different personalities. S1 is impulsive and intuitive, while S2 is capable of reasoning and is cautious. 
+
+S2 has two different minds   one part deals with slow thinking and heavy computation. 
+
+A rational person is engaged with closely avoiding biases, using S2 more
+
+Rationality should be distinguished from intelligence
+
+Superficial thinking is a flaw of rationality, not intelligence, and the ability for a mind to reflect upon experiences. 
+
+  4.
+
+You cannot stop S1’s actions
+
+Associative activation   ideas lead to other ideas in a sequence of further activities   each element strengthens other elements
+
+Words lead to reaction leading to emotion leading to action 
+
+The coherence of the brain is the link of ideas   it links the past and prepares you for the future
+
+You think with your body, not with your brain
+
+Resemblance, contiguity in time and place, and causality
+
+Most of associative thinking is unconscious, and we know far less about ourselves than we think we do
+
+Ideas are primed by other ideas, causing a ripple effect
+
+Ideomotor effect
+
+Priming goes both aways, thinking of an idea leads to action, an action leads to thoughts
+
+Priming goes with actions that represent an idea
+
+Money primes individualism
+
+Read by figuring out if you have heard that or not
+
+  5.
+
+Cognitive strain is the presence of having uncompleted tasks and the current output of effort
+
+Priming, good mood, clear displays, and repeated experiences lead to cognitive ease
+
+Familiarity has the quality of “pastness” which can misinterpreted as prior experience
+
+Easier cognitive ease gives the sense of familiarity
+
+S2 relies on the familiarity produced by S1
+
+Illusions occur over judgment based on familiarity, from an ease of cognitive strain
+
+Anything that leads to an easier cognitive load has the potential to lead to bias
+
+If you cannot remember where a memory came from, you often go with the path of easier cognitive ease
+
+To persuade, you must maximize legibility
+
+Make your message memorable, put it simple, put it in verse (poetically)
+
+People differentiate truth using cognitive ease   something that is linked by logic, comes from a trustable source, or through association
+
+The sense of cognitive ease cannot be located to its origin easily
+
+Cognitive strain leads to a greater use of S2
+
+Mere exposure effect   something that is more familiar will be more likable
+
+Survival instincts lead to people avoiding going out of their comfort zone
+
+Creativity is associative memory that works exceptionally well
+
+Mood has a powerful effect on cognitive performance   S1’s intuition
+
+A happy mood loosens the control of S2 over performance   people become more creative and less vigilant but more prone to error
+
+Cognitive ease is both a cause and effect (reciprocal to each other meaning one causes the other and so on)
+
+  6.
+
+S1 continuously updates a framework for the world, constructed by associations
+
+There is a category of events that you expect passively, and are not surprised when they happen
+
+Unexpected events become expectation after the first encounter
+
+Associative coherence leads us to have logical biases, and cognitive ease   the norm theory   S1 has norms that detect anomalies and irregularities
+
+S1 has the ability to understand language and recognize the range of plausible values or possibilities
+
+Often, we attribute a large event to must have some causality in terms of consequences and causes
+
+S1 is constantly creating and seeking coherence in our world of ideas
+
+S1 has causality reasonings built in from birth
+
+Religion is highly interconnected with S1’s desire to envision the division between the physical and immortal world
+
+Situations often are applied with causal thinking, when they really need statistical thinking
+
+  7.
+
+Jumping to conclusions is efficient according to S1 if the conclusions are likely to be correct and a mistake is acceptable. Otherwise, S2 intervenes
+
+Recent events and current context have the most weight in determining an interpretation
+
+(Review pg. 80 again when not dying)
+
+S1 does not keep track of alternatives it rejects
+
+Uncertainty and doubt are left to the jobs of S2
+
+Understanding a statement must begin with an attempt to believe it   knowing what the idea would signify if it was a true statement
+
+S1 has the initial attempt to believe a statement without control
+
+S2 unbelieves statements
+
+When S2 is engaged, we will almost believe anything
+
+S1 is gullible and biased, S2 is in charge of doubting and believing
+
+Associate memory conforms to confirmation bias (different things will come to mind depending on what is asked)
+
+S1 favors uncritical suggestions of the likelihood of extreme events
+
+Positive test strategy   S2 also conforms to confirmation bias
+
+The halo effect   one aspect of a person influences other aspects
+
+The halo effect stacks up to make a person feel more or less of a good person for example
+
+S1 falls under the halo effect and fills in the gap of people based on previous information   this means that first impressions are important and they have a highg weight
+
+The best way to make interpret information is to do it isolated. Contextual information will always influence information’s interpretation and may lead to the halo effect
+
+An activated idea is an idea that is brought to memory. S1 can only use activated ideas
+
+S1 jumps conclusions when information is limited
+
+S1 does not consider the quality or quantity of information
+
+**What you see is all there is (WYSIATI)**
+
+There more you know, the harder it is for you to jump conclusions
+
+WYSIATI causes S1 often to be overconfident and S1 often skims over the fact that something is missing
+
+WYSIATI falls into framing bias and S1 can interpret the same information based on context evoked, differently
+
+  8.
+
+S1 has been shaped by evolution to provide a continuous assessment of the problems that must be solved for survival
+
+**Good mood and cognitive ease are the human equivalents of assessments of safety and familiarity**
+
+An imperfect ability of S1 to assess can still lead to a survival advantage
+
+Competence is often judged by combining strength and trustworthiness
+
+S1 has the ability to transcend patterns of intensity across different “dimensions” of information, however, this can leave us to feeling cognitive ease and thus, heuristic biases
+
+
+
+
+    Techniques
+
+  Try this   Go on a picture walk   scan through and look briefly at the pictures, captions and diagrams
+  Look at the section headings, bold words, and summary and questions at the bottom
+  Allows you to organize information
+  Rubber duck method
+  Eat your frogs   get started on the most difficult concepts first
+  Blink, shift your attention, and double check your answers   “Does this really make sense?”, trick your mind into looking at the test again with fresh eyes.
+  Create a shutdown ritual
+  Active recall note taking
+
+   Switch between convergence and divergence
+
+  Like a pinball machine, you must hit the ball up again and again. When the balls are tightly packed, they leave trails, which are landmarks for your brain to complete tasks again, with greater efficiency. When the balls are loose, they allow for more entropy, and thus more creativity.
+  Sometimes we need to lose concentration so we can think more clearly
+      Sometime you need to be less focused so that you can be a better learner
+  Your brain has to go back and forth between diffuse modes and focus to learn effectively
+      You need to go back and forth between material in order to learn
+  Your brain can only be in one mode at a time
+      Your thought process can diffuse in diffuse mode
+
+    Convergence mode
+
+  Focused mode   A mode of thinking to get into when trying to learn something new, you need to focus intently   eyes on the prize. To focus means to intently zone in on something
+      You make trails in your brain when you’re focused
+  Engage in active learning during focus mode
+  The more you practice commanding your focus, the better you’ll get at focusing
+      Focus and memorization reinforce each other
+
+    Divergence mode
+
+  However, to solve problems, you need to focus first before diffusing
+  Diffuse mode   A mode of relaxation and you’re not thinking about anything in particular   helps you make imaginative connections between ideas   eyes on the flies
+  When you relax your mind and focus on nothing in particular, the solution comes easy
+      You need to take a break for diffuse mode to work
+  Switch to diffuse mode by doing different tasks, for creativity
+      Sleep is the ultimate diffuse mode
+      When in diffuse mode, your brain works on the problem in the background
+      Best diffuse methods are through sleeping, exercising, or walking
+
+   Building good habits
+
+  You need enough time to focus, and enough time for diffusion
+      Do something that very different from what you have been focusing on
+
+    Avoid procrastination by getting started
+
+  When you put something off, it hurts your brain, get going and it will stop the pain that comes with doing difficult things
+  Practice and time go hand in hand
+  To become a good learner, just get going
+      Shut off all distractions
+  Pomodoro technique
+
+    Active recall as much as possible
+
+  Active recall   bringing an idea back to mind
+  Look away from the paper and see what you can recall
+
+    No multitasking
+
+  Your focus can only be on one thing at a time
+      When you constantly switch tasks, you waste energy and time
+  Habits are like zombies
+      Replace bad zombies with good zombies
+
+   The physical brain
+
+    Neuron analogy
+
+  Each neuron is a tiny mini computer, connected by synapses
+  Axon   arm of a neuron
+  Brain links   neurons that often fire together
+  Dendrite   legs of a neuron   dendrite spines receive signals from other neurons
+  Synapse   small gap between neurons
+  Neuron aliens shock other neuron aliens to pass a message, the more often one path is shocked, the more stronger the connection
+  Neurons that fire together wire together
+
+    Neuroplasticity and deliberate practice
+
+  Neuroplasticity   the fact that your brain grows and changes
+      Neurons change while we go to sleep
+      Brain links solidify while you’re sleeping
+          During sleep, the brain rehearses what it has learned during the day
+  You need meaningful practice and to take things slowly
+      You need to practice with what you’ve just learned
+      The most boring thing would be if the teacher did all the work for you, leaving you with nothing to do
+      You need to take responsibility in creating your own understanding
+  Neural reuse theory   using ideas you have already learned to assist you in learning new ideas
+  Dendrite growth is a lie detector   they will only grow if you’ve been really focusing
+      Concentrating intently can also spur new connections from larger dendrites
+      Use them or lose them, dendrite spines shrink when they are not used
+          Good learning is like a brick wall, held together by mortars that are dried during sleep
+      When you learn something new, you want to revisit it soon before the dendrites start fading
+  Brief practice sessions over a number of days are better for storing information
+
+   Make your memory as efficient as possible
+
+    Working memory and long term memory
+
+  Your brain uses two systems   working memory, and long term memory
+  Your working memory is your prefrontal cortex
+  Your prefrontal cortex can only hold about 4 things at a time
+  If you don’t focus you won’t hold information
+  Each piece of information is a set of brain links, simple information forms brain links and complicated information forms nets of brain links
+  Long term memory is scattered throughout your brain
+
+    Turn facts into pictures
+
+  Your memory locker also has a toothpaste tube
+      Facts are like toothpaste that muse be squeezed into the tube
+  If your information is a picture, it will be easily taped to the wall
+
+    Interlinked information is remembered
+
+  Anchor your information with something you already know well
+  Recall most often in the beginning, but less often as time goes by
+  Memory palace   associate bizarre things with things in your house
+      The brain is good at remembering visual ideas, due to the visuospatial memory
+      Link randomness to things you know well
+      Use a metaphor, take good notes, imagine you are the object you are trying to remember
+
+    Link your information to strengthen your working memory
+
+  Your working memory creates brain links in stages:
+    1. First your working memory figures out a new concept
+    2. You practice using the new concept and create brain links   connected pattern in your long term memory (dendrite spines and synapses link up)
+    3. The prefrontal cortex can easily pull out information with a lot of brain links, and still hold onto other pieces of information at the same time
+    4. Brain links can be linked into other sets of brain links, and you can pull longer chains of information.
+
+    Exercise and sleep well to improve long term memory
+
+  Learning produces new neurons in the hippocampus
+  During sleep, information is transferred from information from your hippocampus into the neurons of the cerebral cortex (outer layer of the brain)
+      Sleep also clears out the hippocampus for new learning, and also new synaptic connections
+      During sleep, new brain links in the hippocampus from learning will help make long term memory in the cerebral cortex stronger
+  During exercise, BDNF is released (brain derived neurotrophic factor), making them more likely to connect with other neurons
+      BNDF also acts like food for synapses and dendrite spines, making them grow larger
+      Serotonin and dopamine help you come up with new ideas and link ideas together (released from exercise)
+
+   Practice well
+
+    Understanding and practice go together
+
+  Enjoyment comes with mastery   plateau point
+  Trying too hard to understand may result in worse decision and more difficulty in making problems
+      You must practice before viewing a concept through different hats or perspectives
+  The working memory octopus only works when you’re focused and has only four arms
+      Strong brain links are necessary for processing complex information
+      Distractions use up an arm of the octopus
+  Cognitive load   the amount of mental effort being used in working memory
+      It’s important to form long chains of brain links because cognitive load is limited
+      Focus needs to be uninterrupted to create brain links   avoid task switching in the middle of tasks
+  You need to practice   learning comes to life when you do something with information
+
+    Avoid lazy learning and complete deliberate practice
+
+  Focus on the material that is most difficult
+      Brain links go away when there is no difficult practice
+  Practice choosing between techniques in technical situations   **interleaving**
+      Helps you see the difference between a variety of topics when you need it
+  Practice your skills over a number of days actively so that synaptic brain links form
+  Skills need to be practiced separately and then interweaved
+      Good writing is built from brain links
+  Action   make a task list for yourself for the next day
+
+    Have variety
+
+  The place you study will help your memory, but this may be a curse in disguise   you should study in a variety of places
+      Recall your long term memory without references to the location of where you learned a piece of information
+          Recall as much as you can, that’s what you’re doing on tests
+  You should not rely on a preferred learning style   you should use several different methods of learning
+  Rut think   your mind gets used to running along certain neural pathways that it can’t easily change anymore
+      The way to get better is to strike out in a completely different direction
+  Transfer   brain links you create in one area can allow you to more easily build brain links in another
+  A poor working memory can be a better creativity memory, and force you to simplify ideas (benefit) due to a lower amount of objects that can processed in your prefrontal cortex
+      Slow learners can learn more deeply than fast learners because they spend more time throughout the process
+
+   Miscellaneous
+
+    Be your own scientist studying you
+
+  Observe yourself from the ceiling
+  You need to spot out what works best for you
+
+    Checklist for exams & tests
+
+  Did you get reasonable sleep?
+  Did you review your notes and use active recall to see if you could recall the ideas?
+  Did you study a little bit every night?
+  Did you focus carefully during study sessions and avoid distractions?
+  Did you study in different locations?
+  Dd you read your resources carefully and make short notes?
+  Did you actively rework problems yourself?
+  Did you do deliberate practice?
+  Did you interleave your studies?
+  Did you use images and metaphors?
+  Did you complete diffuse learning?
+  Eat your frogs first   work on the hardest problems first   when you are stuck, that is when you leave it, then go back to it
+  If you’re stuck for a minute or longer move on
+  Use the same strategy for homework practice
+  Consciously deep breath through the stomach
+
+    Learning is a privilege
+
+  Positivity over avoiding punishment
+  Don’t follow your passion, broaden your passion
+  Learn a topic deeply, but also broaden your passions
+  When you are wrong, admit it, and change your mind without denial
+
+
+    Executive summary
+
+Mental models are important ways to effectively navigate through live. Not only by solving problems, mental models also help us avoid problems. Building a lattice of mental models allows us to see our blind spots, and constantly be grounded in reality, when moving through the chaos of life. 
+
+1. Maps are not the best representation of reality
+2. To know your circle of competence, is to know what you know, and know what you don’t know
+3. Deriving first principles means to separate what is non-reducible, and thus true
+4. Thought experiments allow us to test situations, and they must be done with scientific rigour
+5. What is necessary comes before what is sufficient
+6. First, second, and third order consequences don’t always have a correlation to each other
+7. It is important to consider context before judgment
+8. Start from the end, and get to the start
+9. The simple models have the lowest number of variables
+10. Intent cannot be assumed, and stupidity usually comes first
+
+    Introduction
+
+ Remove your blind spots, avoid problems, minimize risk to limit stress and increase choices
+ To avoid problems, just as much as solve problems through different dimensions
+ Mental models are subconscious and they simplify the world
+ Mental models allow you to break things down, and understand the full scope of a situation
+ The more lenses on a problem the more reality reveals itself
+     Multiple lenses are important for complicated problems
+ Memory models are contiguous because the universe works in the same way
+ Understanding must constantly be tested with reality
+     Keep contact with the earth
+     Test ideas out in the real world
+ Failure to update reality comes from wrong perspective or vantage point, denial from ego and distance from the consequences of our actions:
+    1. We have a hard time seeing any system we are in (variables have to recognizes consciously)
+    2. Ego affects our perception of reality because we are afraid of being wrong and we are invested in defending ourselves
+         Stress and anxiety are caused when we double down on seeing the world the way we want to see it
+    3. The farther a consequence is, the more likely we keep our beliefs
+         No reflection causes no learning causes mistakes, leading to a cycle of wasting time
+         Updating beliefs is painful
+ The degree to which mental models explain reality is the degree they improve our thinking, they help us avoid consequences and allow us to see higher consequences
+     We cause things, things don’t just happen to us
+         When things happen in accord with our view of the world we naturally think they are good for us and others, while when they are wrong, we think they are bad
+     Problems with mental models  wrong model or applied during the wrong time or situation  fit into a trap of knowing if the model fits into reality or not
+ An engineer thinks in terms of systems, a psychologist thinks in terms of incentives, and a business person thinks in terms of opportunity cost and risk-reward.
+     Each person has blind spots
+     The goal should be to have a variety of mental models for multiple disciplines and then have the right wisdom to apply the correct one
+         Learn and apply, learn what types of situations to apply which
+ The larger and more relevant the sample size, the more reliable the model  in organic systems such as math, organic systems such as biology, and human history
+     Better models make better descriptions through better understanding
+     The more information a model can cover, the more accurate of a representation of reality the model is
+ The way we are now is not how we always were, considering how history evolved over time is crucial
+ Facts must connect together through lattices of mental models. The world does isolate itself into discrete disciplines
+     Synthesizes the borders of knowledge
+     Consider the entire truth, not just the partial truth
+
+    1. The map is not the territory
+
+ The best map is not reality, they are merely abstractions (simpler ideas)
+     Maps are only useful to the extent they are explanatory and predictive
+ A map is a reduction of reality and they can also be a snapshot of a point in time
+     Maps are tools that simplify territory
+         If the aim becomes simplification rather than understanding we start to make bad decisions
+     A map is an abstraction, an abstraction loses relevant detail for simplicity
+     Rules for a map cannot apply to a constantly changing world, we need to adapt
+ The territory is the actual reality the map is a simplified representation, they don’t always agree with each other. They have limits
+ A problem occurs when our knowledge pertains to the map instead of the territory
+ All maps are not dogma (principles laid out to be true), and they are not meant to be used forever
+ If the value of a map or model is related to its ability to predict or explain, then it needs to represent reality, including changes
+ It is important to understand what your map can cover, and what its limitations are
+ 1. Reality is the ultimate update
+     Territories change, sometimes faster than the maps and models that describe them
+     Update by feedback loops
+ 2. Consider the cartographer
+     Models are useful when we consider the context and purpose of it from its creator
+ 3. Maps can influence territories
+ To think a few steps ahead is to think beyond the map
+
+    2. Circle of competence
+
+ To understand your circle of competence, is to know what you know, and know what you also don’t know
+1. What is a circle of competence?
+    1. In our circle of competence, you are a Lifer, not a Stranger
+    2. Be a Lifer, not a Stranger (a person that seeks specialized knowledge)
+2. How do you know when you have one?
+    1. Within our circle of competence, we know exactly what we do not know. Knowing what is knowable and what is unknowable
+    2. We are able to solve problems in our circle, efficiently
+3. How do you build and maintain one?
+    1. A circle of competence is dynamic, just as the information in the world is also constantly changing
+    2. Learning comes when experience meets reflection
+    3. Monitor your circle of competence with truth
+    4. You can't improve if you don't know what you're doing wrong
+    5. Have an outside perspective to help you, avoids bias
+    6. When we are outside of our circle of competence, we are not well equipped to make decisions.
+4. How do you operate outside of one?
+    1. Learn at least the basics, acknowledge you are a stranger, not a lifer.
+    2. Get help from the people who have a strong circle of competence. Ask for advice
+ It is important to know a person's incentives for an area that they are competent in
+ Our circle of competence has a limit and cannot include everything. Identify your circle and know how to move around outside it
+ Falsifiability: if you cant prove something wrong, you can't prove it right either
+     A statement must have a degree of risk to be proved incorrect/wrong for it to exist as something that can be proved correct
+     Applying the filter of falsifiability helps people sort for robust theories, proving them their probability to be true if they cannot be tested
+
+    3. First principles thinking
+
+ A tool to help clarify complicated problems by separating the underlying idea or facts from any assumptions based on them  what remains are the essentials
+     Knowledge can only be built when we are actively trying to falsify it (prove it wrong)
+ First principles do not provide a checklist for things that are always true; they are the foundation on which to build
+     First principles identifies the elements that are non-reducible.
+ They are the boundaries that you have to work with in any given situation
+ Everything not a law of nature, is just a shared belief
+     Learn to take things apart, test your assumptions, reconstruct them
+ If we want to identify the principles to cut through dogma, we can use Socratic questioning, or the Five Whys
+     Socratic questioning:
+         Establish truth, reveal assumptions, separate knowledge from ignorance
+            1. Why do I think this? What exactly do I think?
+            2. How do I know this is true? What if it were the opposite?
+            3. How can I back this up?
+            4. What might others think? How do I know I am correct?
+            5. What if I am wrong? What are the consequences if I am?
+            6. Why did I think that? Was I correct?
+            7. What conclusions can I draw from the reasoning process?
+     Five Whys:
+         Land on a “what” or a “how”
+         Systematically delving further into a statement or concept so that you can separate reliable knowledge from assumption
+ When dogma is taken for truth, you can overlook the reasons that the dogma can be false
+     To improve on something, we need to understand why it is successful or not
+ Understand the rationale behind first principles, before you rely on other people’s tactics
+     You can change the tactics if you know the principles
+     The way things are might not be the way things have to be
+ The man that grasps principles can select methods, the man that selects methods without understanding principles is sure to have problems
+
+    4. Thought experiment
+
+ Creativity is intelligence having fun
+ Devices of the imagination used to investigate the nature of things
+     Used to examine what can be known, opens up exploration, and help us avoid mistakes
+     Explore situations from more angles than you can physically examine and test for
+ Thought experiments require rigor like a scientific method. Thought experiments are not daydreams:
+    1. Ask a question
+    2. Conduct background research
+    3. Construct hypothesis
+    4. Test with thought experiments
+    5. Analyze outcomes and draw conclusions
+    6. Compare to hypothesis, and adjust accordingly
+ Imagine physical impossibilities, re-imagining history, intuiting the non-intuitive
+     Historical counter-factual, and semi-factual (If Y happened instead of X, what would be the outcome?)
+     History is a chaotic system, a small change in the beginning conditions can exponentially grow to vastly different outcomes down the line
+         Important to be rigorous with the scientific method to gain useful conclusions
+ Solve problems with intuition and logic that cannot be demonstrated physically
+     How did X lead to Y?
+     You can analyze how smart or stupid your own decisions are, regardless of outcome
+     Thought experiments allow us to verify if our natural intuition by running experiments to make a clear point
+ Use thought experiments to realize unrealized outcomes and see what could have occurred within the limits we have
+     Thought experiments let us figure out what we value in life and where to focus our energies
+     Identify the decisions and actions that had impact
+ Thought experiments cannot predict chaotic systems well
+     The more scenarios you can imagine where nothing changes when you change a variable, the weaker the correlation of it being a critical cause.
+     Thought experiments tell you the limits of what you know and the limits of what you should attempt
+ You become aware of your process so that if your results are good, and you play to logic and strategy, instead of luck
+ Veil of ignorance  ignore your initial intuition of what is likely to be fair, and challenge these beliefs
+
+    5. Necessity vs sufficiency
+
+ There is a gap between what is necessary to succeed, and what is sufficient
+     What is necessary, always comes before what is sufficient
+ In mathematics, sets of conditions necessary for be successful is part of the set sufficient to be successful.
+     The sufficient set is far larger than the necessity set
+
+    6. Second-order thinking
+
+ Second-order thinking is thinking far ahead, as well as holistically (considering everything as a whole)  considering the consequences of the consequences, and so on
+ Short term gain vs long-term pain
+     Is what we are doing now going to get the results of what we want
+     Going for immediate payoff usually guarantees a one-off interaction  trust and reputation are built long-term
+ First-order consequences can be good, while second and third can be bad, and first-order can be bad, while second and third can be good
+     The law of unintended consequences  not factoring in the second level of effects
+     Everything affects everything, things are not produced and consumed in vacuum
+ Can be used to avert problems and anticipate challenges that you can then address in advance
+ Although valuable, avoid the Slippery Slope Effect  the idea that if we start with an action, everything after causes B, C, D, and E.
+     Second and subsequent effects can only go so far, it is important to focus on evaluating the most likely causes and effects
+ Ask yourself: And then what?
+ A little time spent thinking ahead can save us massive amounts of time later.
+
+    7. Probabilistic thinking
+
+ Probability is a tool to make sense of the unknown and uncontrollable
+ Using math and logic to calculate the likelihood of a specific outcome
+ Accurate thinking enhances precision, effectiveness
+ Our best method is to estimate the future since we cannot be certain of it
+1. Bayesian thinking
+    1. Given limited but useful information, we should take into account as much of what we know, when we learn something new, to make the best possible predictions
+    2. Bayes Theorem  the probability of event A happening, given that B has happened, is equal to the probability of event B happening given that A has happened, multiplied by the probability of both events occurring together, divided by the sum total for all probabilities. 
+        1. You need:
+            1. Prior (contextual information the most important)
+            2. Evidence and its likelihood of another probability you want to analyze
+    3. Context is key
+    4. Your context itself is also a probability: called the likelihood ratio or Bayes factor.
+    5. Cycle of challenging and validating what you believe you know
+    6. Conditional probability:
+        1. Observing the context to see if it creates an independent probability, or dependent probability. 
+        2. Bayes formula is derived from conditional probability formulas. However, as formula itself, it connects two different conditional probabilites. 
+2. Fat-tailed curves
+    1. Aka. normal distribution
+    2. Fat-tailed curves are not bell curves. Normal distributions can extend forever
+        1. The more extreme events that are possible, the higher chance that one will occur
+        2. The tails mean everything
+    3. It is critical to deal with fat-tailed curves in the right way because they leave us with a wildly unpredictable future
+3. Asymmetries
+    1. Metaprobability  the estimate of your estimates
+     Orders of magnitude  any inaccuracy with an extreme event can cause calculations to be way off
+     Anti-fragility: Three categories of objects
+         Ones harmed by volatility and unpredictability
+         Ones neural to volatility and unpredictability
+         Ones that benefit from it
+             Some entities can thrive in unpredictability
+         Predicting is impossible, its more better to prepare
+         Fail temporarily  learn how to learn from your failures, and never take a failure that would put yout out of the game
+             Failure comes with the antifragile gift of learning
+             What you learn makes you less vulnerable to the volatility of our world
+     Upside-down optionality  seeking out situations that have good odds of offering opportunities  seek to increase your odds of opportunity
+     There are more probability estimates on the over-optimistic side than the under-optimistic side (meaning you are likely to overestimate than underestimate)
+     Probabilistic thinking has its limits
+     Identify what matters, determine the odds, check your assumptions, make a decision
+     Causation vs correlation:
+         Not all correlations are causations
+         No correlation: correlation coefficient (between 0 and 1) should be close to 0
+         Perfect correlation (correlation of 1)
+         Weak to moderate correlation (Between 0 and 1) and suggests other factors are at play
+         If you have trouble dealing with causation vs correlation, invert the variables (dependent and independent). If the inverse is true, then it is most likely just a correlation
+         Regression to the mean  the tendency for extreme scores to move to the mean over repeated measurements. The best appears to get worse, the worst appears to get better (extremes soften when correlation is imperfect). This means the best correlation gets worse, and the worst correlation gets better (often extremes are influenced by randomness and taking more measurements will cause the correlation to “regress” to the average.
+             Fallacies in the extremes can lead to causations. This is why control groups (variables are fixed) to be measured and determine if effects are real, or just due to variability.
+             Without a control group, you can never have a perfect measure
+            
+
+    8. Inversion
+
+ “Hence to fight and conquer in all your battles is not supreme excellence; supreme excellence consists in breaking the enemy’s resistance without fighting.”  Sun Tzu
+ Invert  turn upside down
+ Approach a situation from the opposite end of the natural starting point
+     Instead of thinking forward, think backward
+ “Avoiding stupidity is easier than seeking brilliance”
+ Start by assuming that what you want to prove is true or false, then show what else would have to be true. Assume true, then prove by counter example.
+     Think deeply about what you want to avoid and see what options are leftover.
+     Start at the end, move to the start.
+     If it were the case, what would it look like?
+ Forcefield analysis  any situation where change is desired, management of that change requires inversion
+    1. Identify the problem
+    2. Define your objective
+    3. Identify the forces supporting the change to your objective
+    4. Identify the forces that impede changes towards the objective
+    5. Strategize a solution
+ Inversion leads to innovation
+ Consider the opposite angle to solve a problem
+ Identify not only what to do to improve outcomes, but what to do to stop making things worse
+     Instead of thinking how to fix a problem, think about how to prevent it from happening
+
+    9. Occam’s Razor
+
+ “A plurality is not to be posited without necessity”
+ Creativity is making the complicated simple
+ It is human nature to overthink, stress, and overcomplicate
+ Simple explanations are more likely to be true than a complicated one
+     Unnecessary complexity fills gaps that will eventually uncover
+ We should prefer the simplest explanation with the fewest moving parts
+     They are easier to falsify, understand, and more likely to be correct
+     As you increase the variables, the greater the probability for error
+     Occam’s Razor is used to avoid wasting time, resources, and energy
+ Use when you have two competing things, of equal aspects in explanations, the simple solution suffices
+     On the other hand, sometimes, some things may not be that simple
+         The Razor does not create simplicity out of the complex. If something cannot be reduced, you must deal with it as is
+         Something can only be simplified to the extent it can still provide an accurate understanding
+
+    10. Hanlon’s Razor
+
+ Men are constrained by necessity (limitations, societal pressure, etc), and build up rationalizations to account for their acts
+ “Do not attribute to malice, that which is more explained by stupidity”.
+ People make mistakes and you need to ask if there was another possibility for a sequence of events
+     Look for options instead of missing opportunities
+ The explanation most likely to be right contains the least amount of intent
+     The fallacy of conjunction  you cannot assume a person’s intent unless you have concrete evidence
+ When we see something we don’t like happen, that seems wrong, we assume its intentional. It’s more likely that it was completely unintentional
+     Over concluding that violates logic, and confirmation bias
+ When we are in defense mode, we avoid dealing with the perceived threat and reduce our vision, blinding us from the big picture
+
