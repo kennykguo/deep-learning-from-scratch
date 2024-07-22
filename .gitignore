@@ -1,3 +1,5 @@
 /archive
 /.jupyter
 /data
+/.ipynb_checkpoints
+/.vscode
