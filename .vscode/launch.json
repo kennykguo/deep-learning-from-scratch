@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/kennykguo/deep_learning_from_scratch/cpp_NN/src",
-      "program": "/home/kennykguo/deep_learning_from_scratch/cpp_NN/src/build/Release/outRelease",
+      "cwd": "/home/kennykguo/deep_learning_from_scratch/cpp_NN/without_cuda",
+      "program": "/home/kennykguo/deep_learning_from_scratch/cpp_NN/without_cuda/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
