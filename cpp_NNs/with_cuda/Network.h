@@ -1,31 +1,29 @@
 #pragma once
 #include <vector>
-#include "LinearLayer.h"
-#include "Neuron.h"
+#include <memory>
+#include "Layer.h"
+#include "SoftmaxCrossEntropy.h"
 
 using namespace std;
 
 class Network {
-
 public:
+    void addLayer(std::unique_ptr<Layer> layer);
+    std::vector<std::vector<Neuron>> forward(const std::vector<std::vector<Neuron>>& input, const std::vector<std::vector<Neuron>>& labels);
+    void backward();
+    double getLoss() const { return loss; }
+    // Add the matrixMultiply function declaration
+    static vector<vector<Neuron>> matrixMultiply(
+        const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne,
+        const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo);
 
-    int numLayers; // Number of layers in the network
-
-    // TODO: Update this so the user manually has to set this
-    vector<LinearLayer> networkLayers; // Vector of LinearLayer objects
-
-// ------------------------------------------------------------------------------------------------------------------
-    // ReLU activation function (takes in a reference vector of vectors (a matrix))
-    void ReLU(vector<vector<Neuron>>& matrix);
-
-    // Derivative of ReLU activation function (takes in a reference vector of vectors (a matrix))
-    void der_ReLU(vector<vector<Neuron>>& matrix);
-
-    // Matrix multiplication function
-    // Takes in two matrices of neurons and their corresponding rows and columns, and returns a matrice
-    // Original matrices are not modified
-    vector<vector<Neuron>> matrixMultiply(const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne, const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo);
+private:
+    std::vector<std::unique_ptr<Layer>> layers;
+    std::vector<std::vector<std::vector<Neuron>>> layerOutputs;
+    SoftmaxCrossEntropy* lossLayer;
+    double loss;
 };
+
 
 extern "C" void cudaMatrixMultiply(const std::vector<std::vector<Neuron>>& A, 
                                    const std::vector<std::vector<Neuron>>& B, 

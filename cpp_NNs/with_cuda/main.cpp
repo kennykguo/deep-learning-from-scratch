@@ -1,6 +1,8 @@
 #include "LinearLayer.h"
 #include "Network.h"
 #include "Neuron.h"
+#include "ReLU.h"
+#include "SoftmaxCrossEntropy.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -9,6 +11,7 @@
 #include <tuple>
 #include <chrono>
 #include <iomanip>
+#include <memory>
 
 using namespace std;
 
@@ -104,57 +107,42 @@ void printExample(const vector<Neuron>& label, const vector<vector<Neuron>>& exa
 
 
 int main() {
-
-    cout << "Starting program with CUDA acceleration:\n";
+    std::cout << "Starting program with CUDA acceleration:\n";
 
     // Define our data
-    string filename = "train.csv";
-    auto result = readCSV(filename);
+    std::string filename = "train.csv";
+    auto [labels, batches] = readCSV(filename);
 
-    // Define model layers manually
+    // Define model layers
     Network network;
-    network.networkLayers.push_back(LinearLayer(network, INPUT_SIZE, 4096)); // (784, 128)
-    network.networkLayers.push_back(LinearLayer(network, 4096, 4096)); // (128, 64)
-    network.networkLayers.push_back(LinearLayer(network, 4096, 10)); // (64, 10)
+    network.addLayer(std::make_unique<LinearLayer>(784, 256));
+    network.addLayer(std::make_unique<ReLU>());
+    network.addLayer(std::make_unique<LinearLayer>(256, 128));
+    network.addLayer(std::make_unique<ReLU>());
+    network.addLayer(std::make_unique<LinearLayer>(128, 10));
+    network.addLayer(std::make_unique<SoftmaxCrossEntropy>(10));
 
-    // Check if batch and labels are not empty
-    auto labels = get<0>(result);
-    auto batches = get<1>(result);
-
-    cout << "Labels size: " << labels.size() << "\n";
-    cout << "Batches size: " << batches.size() << "\n";
-
+    std::cout << "Labels size: " << labels.size() << "\n";
+    std::cout << "Batches size: " << batches.size() << "\n";
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    if (!labels.empty() && !batches.empty()) {
-        auto inputBatch = batches[0];
-
-        cout << "Input batch size: " << inputBatch.size() << "\n";
-
-        // Forward through the first layer
-        auto layer1Output = network.networkLayers[0].forward(inputBatch);
-        cout << "Layer 1 output size: " << layer1Output.size() << "\n";
-
-        // Forward through the second layer
-        auto layer2Output = network.networkLayers[1].forward(layer1Output);
-        cout << "Layer 2 output size: " << layer2Output.size() << "\n";
-
-        // Forward through the third layer
-        auto finalOutput = network.networkLayers[2].forward(layer2Output);
-        cout << "Final output size: " << finalOutput.size() << "\n";
+    // Training loop
+    for (size_t epoch = 0; epoch < 5; ++epoch) {  // 5 epochs as an example
+        for (size_t i = 0; i < batches.size(); ++i) {
+            auto output = network.forward(batches[i], {labels[i]});  // Wrap labels[i] in a vector
+            network.backward();
+            
+            if (i % 100 == 0) {  // Print loss every 100 batches
+                std::cout << "Epoch " << epoch << ", Batch " << i << ", Loss: " << network.getLoss() << std::endl;
+            }
+        }
     }
 
-    cout << "Done" << endl;
-
-    // Stop the timer
     auto end_time = std::chrono::high_resolution_clock::now();
-
-    // Calculate the duration
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
 
-    // Print the runtime
-    cout << "Total runtime: " << duration.count() << " milliseconds" << endl;
+    std::cout << "Training completed. Total runtime: " << duration.count() << " milliseconds" << std::endl;
 
     return 0;
 }

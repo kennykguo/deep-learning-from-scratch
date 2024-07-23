@@ -1,56 +1,57 @@
 #include "Network.h"
-#include <iostream>
-#include <cassert>
-#include <iostream>
 
 using namespace std;
 
+void Network::addLayer(std::unique_ptr<Layer> layer) {
+    if (dynamic_cast<SoftmaxCrossEntropy*>(layer.get())) {
+        lossLayer = dynamic_cast<SoftmaxCrossEntropy*>(layer.get());
+    }
+    layers.push_back(std::move(layer));
+}
 
-// The Network classes define the architecture, and you must choose the layers before you compile the program
+std::vector<std::vector<Neuron>> Network::forward(const std::vector<std::vector<Neuron>>& input, const std::vector<std::vector<Neuron>>& labels) {
+    layerOutputs.clear();
+    layerOutputs.push_back(input);
 
+    std::vector<std::vector<Neuron>> current = input;
+    for (const auto& layer : layers) {
+        current = layer->forward(current);
+        layerOutputs.push_back(current);
+    }
 
-// ReLU activation function
-void Network::ReLU(vector<vector<Neuron>>& matrix) {
-    // Loops over every row and every neuron in the row
-    // Auto allows the compiler to automatically determine the type of a variable
-    // Loops through every vector of vectors in matrix (every row)
-    // The : convention is the range based loop -> 
-    for (vector<Neuron>& row : matrix) {
-        // Iterate through each neuron in the row
-        for (Neuron& neuron : row) {
-            // Apply ReLU activation function: set value to 0 if it's less than or equal to 0
-            if (neuron.value <= 0) {
-                neuron.value = 0;
-            }
-        }
+    if (lossLayer) {
+        lossLayer->setLabels(labels);
+        loss = lossLayer->getLoss();
+    }
+
+    return current;
+}
+
+void Network::backward() {
+    std::vector<std::vector<Neuron>> grad = layers.back()->backward(layerOutputs.back());
+
+    for (int i = layers.size() - 2; i >= 0; --i) {
+        grad = layers[i]->backward(grad);
     }
 }
 
+// void Network::setLabels(const vector<vector<Neuron>>& labels) {
+//     if (lossLayer) {
+//         lossLayer->setLabels(labels);
+//     }
+// }
 
-
-// Derivative of ReLU activation function
-void Network::der_ReLU(vector<vector<Neuron>>& matrix) {
-    for (vector<Neuron>& row : matrix) {
-        // Iterate through each neuron in the row
-        for (Neuron& neuron : row) {
-            // Apply the derivative of ReLU: set value to 0 if it's less than or equal to 0
-            if (neuron.value <= 0) {
-                neuron.value = 0;
-            }
-        }
-    }
-}
-
-
+// double Network::getLoss() const {
+//     return lossLayer ? lossLayer->getLoss() : 0.0;
+// }
 
 vector<vector<Neuron>> Network::matrixMultiply(
     const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne,
     const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo) {
     
     vector<vector<Neuron>> result;
+
     cudaMatrixMultiply(matrixOne, matrixTwo, result);
+
     return result;
 }
-
-
-
