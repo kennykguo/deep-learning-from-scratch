@@ -75,7 +75,7 @@ for i in range(iterations):
 
 # Print the accuracy
 print("Accuracy: ")
-=======
+
 import torch
 import torch.nn.functional as F
 from dataset import Dataset

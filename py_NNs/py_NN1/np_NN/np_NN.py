@@ -111,7 +111,7 @@ class Network:
         plt.title('Model Accuracy over Epochs')
         plt.legend()
         plt.grid(True)
-=======
+
 import numpy as np
 import math
 import matplotlib.pyplot as plt

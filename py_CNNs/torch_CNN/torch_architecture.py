@@ -139,8 +139,6 @@ class Sequential:
         # Get all parameters and put them in a list
         return [p for layer in self.layers for p in layer.parameters()]
     
-
-=======
 import torch
 import scipy as signal
 

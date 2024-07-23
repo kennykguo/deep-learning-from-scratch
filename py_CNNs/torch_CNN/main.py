@@ -70,7 +70,7 @@ for epoch in range(max_iterations):
 
 directory = os.getcwd() + "model"
 
-=======
+
 import torch
 import torch.nn.functional as F
 from dataset import Dataset
