@@ -8,23 +8,33 @@ using namespace std;
 
 class Network {
 public:
-    void addLayer(std::unique_ptr<Layer> layer);
-    std::vector<std::vector<Neuron>> forward(const std::vector<std::vector<Neuron>>& input, const std::vector<std::vector<Neuron>>& labels);
+    // unique_ptr is a smart pointer that owns and manages another object through a pointer
+    void addLayer(unique_ptr<Layer> layer);
+
+    vector<vector<Neuron>> forward(const vector<vector<Neuron>>& input, const vector<vector<Neuron>>& labels);
+
     void backward();
+
     double getLoss() const { return loss; }
-    // Add the matrixMultiply function declaration
+    
+    void setLearningRate(double lr);
+
     static vector<vector<Neuron>> matrixMultiply(
         const vector<vector<Neuron>>& matrixOne, int rowsOne, int colsOne,
         const vector<vector<Neuron>>& matrixTwo, int rowsTwo, int colsTwo);
 
 private:
-    std::vector<std::unique_ptr<Layer>> layers;
-    std::vector<std::vector<std::vector<Neuron>>> layerOutputs;
+    // Vector of unique_ptr to Layer objects, allowing polymorphism
+    vector<unique_ptr<Layer>> layers;
+    // There are three dimensions because we store all of the outputs here
+    vector<vector<vector<Neuron>>> layerOutputs;
+    // Pointer to the SoftmaxCrossEntropy layer
     SoftmaxCrossEntropy* lossLayer;
+    // Store the current loss calculated
     double loss;
 };
 
-
-extern "C" void cudaMatrixMultiply(const std::vector<std::vector<Neuron>>& A, 
-                                   const std::vector<std::vector<Neuron>>& B, 
-                                   std::vector<std::vector<Neuron>>& C);
+// External C function declaration for CUDA matrix multiplication
+extern "C" void cudaMatrixMultiply(const vector<vector<Neuron>>& A, 
+                                   const vector<vector<Neuron>>& B, 
+                                   vector<vector<Neuron>>& C);

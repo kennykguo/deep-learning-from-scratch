@@ -1,11 +1,5 @@
 #include "Neuron.h"
 #include <cstdlib> // Include for rand()
 
-Neuron::Neuron() {
-    value = randomValue();
-    gradient = 0;
-}
-
-double Neuron::randomValue() {
-    return rand() / double(RAND_MAX); // Generate a random value between 0 and 1
-}
+Neuron::Neuron() : value(0.0), gradient(0.0) {}
+Neuron::Neuron(double val) : value(val), gradient(0.0) {} // Implement the new constructor

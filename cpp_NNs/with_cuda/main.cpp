@@ -17,6 +17,7 @@ using namespace std;
 
 const int INPUT_SIZE = 784; // Number of pixels in each image
 const int BATCH_SIZE = 16; // Batch size for processing
+const int NUM_CLASSES = 10; // Number of classes (digits 0-9)
 
 tuple<vector<vector<Neuron>>, vector<vector<vector<Neuron>>>> readCSV(const string& filename) {
     ifstream file(filename);
@@ -86,63 +87,78 @@ tuple<vector<vector<Neuron>>, vector<vector<vector<Neuron>>>> readCSV(const stri
     return make_tuple(labels, batches);
 }
 
-void printExample(const vector<Neuron>& label, const vector<vector<Neuron>>& example) {
-    // Print the label
-    cout << "Label: " << label[0].value << endl;
-
-    // Print the pixels in a 28x28 grid
-    cout << "Pixels:" << endl;
-    for (size_t i = 0; i < example.size(); ++i) {
-        for (size_t j = 0; j < example[i].size(); ++j) {
-            if (j > 0 && j % 28 == 0) {
-                cout << endl;
-            }
-            cout << example[i][j].value << " ";
+vector<vector<Neuron>> oneHotEncode(const vector<Neuron>& labels) {
+    vector<vector<Neuron>> encodedLabels;
+    for (const auto& label : labels) {
+        vector<Neuron> oneHot(NUM_CLASSES, Neuron{0.0});
+        int labelValue = static_cast<int>(label.value);
+        if (labelValue >= 0 && labelValue < NUM_CLASSES) {
+            oneHot[labelValue].value = 1.0;
         }
-        cout << endl;
+        encodedLabels.push_back(oneHot);
     }
+    return encodedLabels;
 }
 
-
-
-
 int main() {
-    std::cout << "Starting program with CUDA acceleration:\n";
+    cout << "Starting program with CUDA acceleration:\n";
 
     // Define our data
-    std::string filename = "train.csv";
+    string filename = "train.csv";
     auto [labels, batches] = readCSV(filename);
 
-    // Define model layers
+    cout << "Labels size: " << labels.size() << "\n";
+    cout << "Batches size: " << batches.size() << "\n";
+
+    // Print the shape of the first batch of labels
+    // if (!labels.empty()) {
+    //     cout << "First batch of labels size: " << labels[0].size() << "\n";
+    // }
+
+    // Example of one-hot encoding and its shape
+    vector<vector<Neuron>> x = oneHotEncode(labels[0]);
+    // cout << "One-hot encoded labels size: " << x.size() << " || " << x[0].size() << "\n";
+
+    // Define model architecture
     Network network;
-    network.addLayer(std::make_unique<LinearLayer>(784, 256));
-    network.addLayer(std::make_unique<ReLU>());
-    network.addLayer(std::make_unique<LinearLayer>(256, 128));
-    network.addLayer(std::make_unique<ReLU>());
-    network.addLayer(std::make_unique<LinearLayer>(128, 10));
-    network.addLayer(std::make_unique<SoftmaxCrossEntropy>(10));
+    network.addLayer(make_unique<LinearLayer>(784, 512));
+    network.addLayer(make_unique<ReLU>());
+    network.addLayer(make_unique<LinearLayer>(512, 512));
+    network.addLayer(make_unique<ReLU>());
+    network.addLayer(make_unique<LinearLayer>(512, 10));
+    network.addLayer(make_unique<SoftmaxCrossEntropy>(10));
+    network.setLearningRate(0.001);
+    cout << "here" << endl;
 
-    std::cout << "Labels size: " << labels.size() << "\n";
-    std::cout << "Batches size: " << batches.size() << "\n";
-
-    auto start_time = std::chrono::high_resolution_clock::now();
+    auto start_time = chrono::high_resolution_clock::now();
 
     // Training loop
     for (size_t epoch = 0; epoch < 5; ++epoch) {  // 5 epochs as an example
+    
         for (size_t i = 0; i < batches.size(); ++i) {
-            auto output = network.forward(batches[i], {labels[i]});  // Wrap labels[i] in a vector
+
+            // One-hot encode the labels for this batch
+            vector<vector<Neuron>> oneHotLabels = oneHotEncode(labels[i]);
+
+            // Print shape of the current batch of one-hot encoded labels
+            // cout << "Epoch " << epoch << ", Batch " << i << ", One-hot encoded labels size: " << oneHotLabels.size() << " || " << oneHotLabels[0].size() << "\n";
+            
+            auto output = network.forward(batches[i], oneHotLabels);
+
             network.backward();
             
             if (i % 100 == 0) {  // Print loss every 100 batches
-                std::cout << "Epoch " << epoch << ", Batch " << i << ", Loss: " << network.getLoss() << std::endl;
+                cout << "Epoch " << epoch << " || Batch " << i << "|| Loss: " << network.getLoss() << endl;
             }
+
         }
+
     }
 
-    auto end_time = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    auto end_time = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
 
-    std::cout << "Training completed. Total runtime: " << duration.count() << " milliseconds" << std::endl;
+    cout << "Training completed. Total runtime: " << duration.count() << " milliseconds" << endl;
 
     return 0;
 }
