@@ -22,8 +22,6 @@ This is a repository containing deep learning algorithms, with implementations u
 
 This resource contains implementations of these algorithms from scratch in as few lines as possible, and as reusable modules for quick usage.
 
-I created this repository to refine my own understanding of deep learning concepts, and also, for teaching purposes. 
-
 Some of the resources referenced in these implementations:
 
 1. https://www.youtube.com/watch?time_continue=13581&v=Ixl3nykKG9M&embeds_referring_euri=https%3A%2F%2Fadamdhalla.com%2F&source_ve_path=MjM4NTE&feature=emb_title&ab_channel=AdamDhalla
