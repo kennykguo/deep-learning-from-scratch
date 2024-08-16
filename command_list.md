@@ -4,6 +4,8 @@ deactivate
 Recursively delete .DS_Store from here and now ...
 find . -name '.DS_Store' -type f -delete
 
+find . -type d \( -name "__pycache__" -o -name ".ipynb_checkpoints" \) -exec rm -rf {} +
+
 Remove git cache:
 git rm -r --cached .
 git add .
